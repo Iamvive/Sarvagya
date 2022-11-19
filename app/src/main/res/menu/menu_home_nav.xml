@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/feeds"
+    android:title="Feeds"
+    />
+    <item
+    android:id="@+id/videos"
+    android:title="Videos"
+    />
+<item
+    android:id="@+id/donation"
+    android:title="Donation"
+    />
+<item
+    android:id="@+id/appointment"
+    android:title="Appointment"
+    />
+</menu>
