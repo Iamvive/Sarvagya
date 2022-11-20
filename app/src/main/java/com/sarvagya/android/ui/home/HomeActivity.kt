@@ -6,7 +6,7 @@ import com.sarvagya.android.R
 import com.sarvagya.android.databinding.ActivityHomeBinding
 import com.sarvagya.android.ui.home.appointment.AppointmentFragment
 import com.sarvagya.android.ui.home.donation.DonationFragment
-import com.sarvagya.android.ui.home.feeds.FeedsFragment
+import com.sarvagya.android.ui.home.feeds.view.FeedsFragment
 import com.sarvagya.android.ui.home.models.HeaderVM
 import com.sarvagya.android.ui.home.models.HomeVM
 import com.sarvagya.android.ui.home.models.MenuItem

@@ -1,4 +1,4 @@
-package com.sarvagya.android.ui.home.feeds
+package com.sarvagya.android.ui.home.feeds.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
