@@ -6,15 +6,13 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 
-class KtorNetworkClient {
-     operator fun invoke() : HttpClient{
-     return HttpClient(Android){
-            install(Logging){
-                level = LogLevel.ALL
-            }
-            install(JsonFeature){
-                serializer = KotlinxSerializer()
-            }
+object KtorNetworkClient {
+    fun createClient() = HttpClient(Android) {
+        install(Logging) {
+            level = LogLevel.ALL
+        }
+        install(JsonFeature) {
+            serializer = KotlinxSerializer()
         }
     }
 }

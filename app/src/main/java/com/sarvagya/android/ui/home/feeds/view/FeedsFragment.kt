@@ -34,7 +34,7 @@ class FeedsFragment : Fragment(), FeedsPresenter {
         feedsViewModel
             .livePost
             .observe(viewLifecycleOwner) { feedsResponses ->
-                if (feedsResponses.isNullOrEmpty()) {
+                if (!feedsResponses.isNullOrEmpty()) {
                     feedsResponses.forEach {
                         println("Feeds : ${it.title}")
                     }

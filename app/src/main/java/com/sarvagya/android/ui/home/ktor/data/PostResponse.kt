@@ -3,8 +3,9 @@ package com.sarvagya.android.ui.home.ktor.data
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class FeedsRequest(
+data class PostResponse(
     val body: String,
     val title: String,
+    val id: Int,
     val userId: Int
 )
