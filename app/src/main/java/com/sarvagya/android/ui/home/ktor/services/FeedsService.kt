@@ -13,11 +13,11 @@ interface PostsService {
     suspend fun createPost(PostsRequest: FeedsRequest): FeedsResponse?
 }
 
-class PostsServiceImpl(private val client: HttpClient) :PostsService {
+class PostsServiceImpl(private val client: HttpClient) : PostsService {
     override suspend fun getPosts(): List<FeedsResponse> {
         return try {
             client.get { url(HttpRoutes.POSTS) }
-        }catch(e: Exception) {
+        } catch (e: Exception) {
             println("Error: ${e.message}")
             emptyList()
         }
@@ -30,7 +30,7 @@ class PostsServiceImpl(private val client: HttpClient) :PostsService {
                 contentType(ContentType.Application.Json)
                 body = PostsRequest
             }
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             println("Error: ${e.message}")
             null
         }

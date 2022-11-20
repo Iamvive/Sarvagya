@@ -6,6 +6,7 @@ class FeedsVM {
     )
 
     data class Feed(
+        val id: Long,
         val title: String,
         val desc: String,
         val readMoreTxt: String,
