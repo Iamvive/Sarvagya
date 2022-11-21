@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
     id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
@@ -38,6 +39,7 @@ android {
 }
 
 dependencies {
+    def dagger_version = "2.44"
     def lifecycle_version = "2.4.0"
     def ktor_version = "1.6.3"
 
@@ -61,6 +63,10 @@ dependencies {
 
     //Interceptor
     implementation "io.ktor:ktor-client-logging:$ktor_version"
+
+    //Framework for creating objects
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'com.github.bumptech.glide:glide:4.9.0'

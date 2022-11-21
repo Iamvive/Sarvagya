@@ -6,7 +6,7 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 
-object KtorNetworkClient {
+class KtorNetworkClient {
     fun createClient() = HttpClient(Android) {
         install(Logging) {
             level = LogLevel.ALL

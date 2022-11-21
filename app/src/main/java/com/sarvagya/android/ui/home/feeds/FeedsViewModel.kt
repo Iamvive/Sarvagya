@@ -9,6 +9,7 @@ import com.sarvagya.android.ui.home.ktor.services.PostsService
 import com.sarvagya.android.ui.home.ktor.services.PostsServiceImpl
 import io.ktor.client.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class FeedsViewModel : ViewModel() {
 
@@ -17,15 +18,12 @@ class FeedsViewModel : ViewModel() {
     val livePost: LiveData<List<PostResponse>>
         get() = mutablePosts
 
-    init {
-        val service: PostsService = PostsServiceImpl()
-        fetchPosts(service)
-    }
-
-    private fun fetchPosts(service: PostsService) {
+    fun fetchPosts(service: PostsService) {
         viewModelScope.launch {
             val posts = service.getPosts()
             mutablePosts.postValue(posts)
         }
     }
+
+
 }
