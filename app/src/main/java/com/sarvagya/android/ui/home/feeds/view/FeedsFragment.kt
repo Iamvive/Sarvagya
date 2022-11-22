@@ -12,6 +12,7 @@ import com.sarvagya.android.databinding.FragmentFeedsBinding
 import com.sarvagya.android.root.SarvagyaApplication
 import com.sarvagya.android.ui.home.feeds.FeedsAdapter
 import com.sarvagya.android.ui.home.feeds.FeedsViewModel
+import com.sarvagya.android.ui.home.feeds.FeedsViewModelFactory
 import com.sarvagya.android.ui.home.ktor.services.PostsService
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -21,7 +22,7 @@ class FeedsFragment : Fragment(), FeedsPresenter {
     private lateinit var feedsBinding: FragmentFeedsBinding
     private val feedsAdapter by lazy { FeedsAdapter(listOf()) }
     private lateinit var feedsViewModel: FeedsViewModel
-    @Inject lateinit var feedsService : PostsService
+    @Inject lateinit var feedsViewModelFactory: FeedsViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (requireContext().applicationContext as SarvagyaApplication).appComponent.inject(this)
@@ -33,8 +34,8 @@ class FeedsFragment : Fragment(), FeedsPresenter {
         savedInstanceState: Bundle?,
     ): View {
         feedsBinding = FragmentFeedsBinding.inflate(layoutInflater)
-        feedsViewModel = ViewModelProviders.of(requireActivity())[FeedsViewModel::class.java]
-        feedsViewModel.fetchPosts(feedsService)
+        feedsViewModel = ViewModelProviders.of(requireActivity(),feedsViewModelFactory)[FeedsViewModel::class.java]
+        feedsViewModel.fetchPosts()
         observeData()
         setUpFeedList()
         return feedsBinding.root

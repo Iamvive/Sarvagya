@@ -1,8 +1,8 @@
 package com.sarvagya.android.root
 
 import android.app.Application
-import com.sarvagya.android.ui.home.dagger.AppComponent
-import com.sarvagya.android.ui.home.dagger.DaggerAppComponent
+import com.sarvagya.android.root.dagger.AppComponent
+import com.sarvagya.android.root.dagger.DaggerAppComponent
 
 class SarvagyaApplication : Application(){
 

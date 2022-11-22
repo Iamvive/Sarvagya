@@ -1,8 +1,9 @@
-package com.sarvagya.android.ui.home.dagger
+package com.sarvagya.android.root.dagger
 
 import com.sarvagya.android.ui.home.ktor.httpclient.KtorNetworkClient
 import com.sarvagya.android.ui.home.ktor.services.PostsService
 import com.sarvagya.android.ui.home.ktor.services.PostsServiceImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import io.ktor.client.*
@@ -15,8 +16,14 @@ class AppModule {
     @Singleton
     fun createKtorClient() :HttpClient = KtorNetworkClient().createClient()
 
-    @Provides
+}
+
+@Module
+abstract class BindModule{
+
+    @Binds
     @Singleton
-    fun createFeedsService(httpClient: HttpClient) : PostsService = PostsServiceImpl(httpClient)
+    abstract fun createFeedsService(postsServiceImpl: PostsServiceImpl) : PostsService
+
 
 }

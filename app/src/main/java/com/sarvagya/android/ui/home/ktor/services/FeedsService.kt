@@ -10,7 +10,9 @@ interface PostsService {
     suspend fun getPosts(): List<PostResponse>
 }
 
-class PostsServiceImpl(
+class PostsServiceImpl
+@Inject
+constructor(
     private val client: HttpClient
 ) : PostsService {
     override suspend fun getPosts(): List<PostResponse> {
