@@ -35,7 +35,8 @@ class FeedsAdapter(private var feeds: List<Feed>) : Adapter<FeedsViewHolder>() {
         notifyDataSetChanged()
     }
 
-    inner class FeedsViewHolder(private val binding: ItemFeedLytBinding) : ViewHolder(binding.root) {
+    inner class FeedsViewHolder(private val binding: ItemFeedLytBinding) :
+        ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {
