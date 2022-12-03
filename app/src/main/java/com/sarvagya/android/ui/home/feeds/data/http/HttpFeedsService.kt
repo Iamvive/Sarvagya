@@ -10,10 +10,14 @@ class HttpFeedsService
 @Inject constructor(
     private val httpClient: HttpClient,
 ) : FeedsService {
+
+    companion object {
+        const val LANGUAGE = "language"
+    }
     override suspend fun fetchFeeds(param: String): FeedsResponse {
         return httpClient.get {
             url(HttpRoutes.FEEDS)
-            parameter("language", param)
+            parameter(LANGUAGE, param)
         }
     }
 }

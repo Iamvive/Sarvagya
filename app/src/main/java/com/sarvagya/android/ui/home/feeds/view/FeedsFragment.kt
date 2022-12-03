@@ -13,7 +13,6 @@ import com.sarvagya.android.root.SarvagyaApplication
 import com.sarvagya.android.ui.home.feeds.FeedsAdapter
 import com.sarvagya.android.ui.home.feeds.FeedsViewModel
 import com.sarvagya.android.ui.home.feeds.FeedsViewModelFactory
-import com.sarvagya.android.ui.home.ktor.services.PostsService
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -34,21 +33,24 @@ class FeedsFragment : Fragment(), FeedsPresenter {
         savedInstanceState: Bundle?,
     ): View {
         feedsBinding = FragmentFeedsBinding.inflate(layoutInflater)
-        feedsViewModel = ViewModelProviders.of(requireActivity(),feedsViewModelFactory)[FeedsViewModel::class.java]
-        feedsViewModel.fetchPosts()
+        feedsViewModel = ViewModelProviders.of(requireActivity(), feedsViewModelFactory)[FeedsViewModel::class.java]
+        feedsViewModel.fetchFeeds()
+
+        return feedsBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         observeData()
         setUpFeedList()
-        return feedsBinding.root
     }
 
     private fun observeData() {
         feedsViewModel
             .livePost
-            .observe(viewLifecycleOwner) { feedsResponses ->
-                if (!feedsResponses.isNullOrEmpty()) {
-                    feedsResponses.forEach {
-                        println("Feeds : ${it.title}")
-                    }
+            .observe(viewLifecycleOwner) { feeds ->
+                if (!feeds.isNullOrEmpty()) {
+                    feedsAdapter.updateFeeds(feeds)
                 }
             }
     }
@@ -64,5 +66,5 @@ class FeedsFragment : Fragment(), FeedsPresenter {
 
     }
 
-    override fun didTapItem(): Flow<Long> = feedsAdapter.itemClickFlow
+    override fun didTapItem(): Flow<String> = feedsAdapter.itemClickFlow
 }

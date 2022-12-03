@@ -1,7 +1,7 @@
 package com.sarvagya.android.root.dagger
 
+import com.sarvagya.android.ui.home.feeds.data.http.FeedsService
 import com.sarvagya.android.ui.home.feeds.view.FeedsFragment
-import com.sarvagya.android.ui.home.ktor.services.PostsService
 import dagger.Component
 import io.ktor.client.*
 import javax.inject.Singleton
@@ -12,7 +12,7 @@ interface AppComponent {
 
     fun provideKtorClient() : HttpClient
 
-    fun provideFeedsService() : PostsService
+    fun provideFeedsService() : FeedsService
 
     fun inject(fragment : FeedsFragment)
 

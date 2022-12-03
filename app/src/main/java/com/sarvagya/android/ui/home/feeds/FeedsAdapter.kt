@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sarvagya.android.databinding.ItemFeedLytBinding
 import com.sarvagya.android.extension.setTextWithVisibility
 import com.sarvagya.android.ui.home.feeds.FeedsAdapter.FeedsViewHolder
-import com.sarvagya.android.ui.home.feeds.view.FeedsVM.Feed
+import com.sarvagya.android.ui.home.feeds.view.FeedVM
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 
-class FeedsAdapter(private var feeds: List<Feed>) : Adapter<FeedsViewHolder>() {
+class FeedsAdapter(private var feeds: List<FeedVM>) : Adapter<FeedsViewHolder>() {
 
-    private val itemChannel = BroadcastChannel<Long>(1)
+    private val itemChannel = BroadcastChannel<String>(1)
     val itemClickFlow = itemChannel.asFlow()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedsViewHolder {
@@ -30,7 +30,7 @@ class FeedsAdapter(private var feeds: List<Feed>) : Adapter<FeedsViewHolder>() {
         return feeds.size
     }
 
-    fun updateFeeds(feeds: List<Feed>) {
+    fun updateFeeds(feeds: List<FeedVM>) {
         this.feeds = feeds
         notifyDataSetChanged()
     }
@@ -46,12 +46,10 @@ class FeedsAdapter(private var feeds: List<Feed>) : Adapter<FeedsViewHolder>() {
             }
         }
 
-        fun bindData(feed: Feed) {
+        fun bindData(feed: FeedVM) {
             binding.apply {
                 feedTitleTV.text = feed.title
                 feedDescTV.text = feed.desc
-                readMoreTV.setTextWithVisibility(feed.readMoreTxt)
-                durationTV.setTextWithVisibility(feed.durationTxt)
             }
         }
     }

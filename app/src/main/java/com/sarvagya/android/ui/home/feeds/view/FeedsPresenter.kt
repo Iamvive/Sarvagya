@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface FeedsPresenter {
     fun didTapBack() : Unit
-    fun didTapItem() : Flow<Long>
+    fun didTapItem() : Flow<String>
 }
