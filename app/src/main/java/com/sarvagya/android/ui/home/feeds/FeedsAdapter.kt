@@ -5,7 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import coil.api.load
+import coil.transform.CircleCropTransformation
+import com.sarvagya.android.R
 import com.sarvagya.android.databinding.ItemFeedLytBinding
+import com.sarvagya.android.extension.loadImage
 import com.sarvagya.android.extension.setTextWithVisibility
 import com.sarvagya.android.ui.home.feeds.FeedsAdapter.FeedsViewHolder
 import com.sarvagya.android.ui.home.feeds.view.FeedVM
@@ -50,6 +54,7 @@ class FeedsAdapter(private var feeds: List<FeedVM>) : Adapter<FeedsViewHolder>()
             binding.apply {
                 feedTitleTV.text = feed.title
                 feedDescTV.text = feed.desc
+                feedIV.loadImage(feed.thumbnail)
             }
         }
     }
