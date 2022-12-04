@@ -62,9 +62,7 @@ class FeedsFragment : Fragment(), FeedsPresenter {
         }
     }
 
-    override fun didTapBack() {
-
-    }
+    override fun didTapBack() {}
 
     override fun didTapItem(): Flow<String> = feedsAdapter.itemClickFlow
 }
