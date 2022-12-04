@@ -7,10 +7,8 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.api.load
 import coil.transform.CircleCropTransformation
-import com.sarvagya.android.R
 import com.sarvagya.android.databinding.ItemFeedLytBinding
 import com.sarvagya.android.extension.loadImage
-import com.sarvagya.android.extension.setTextWithVisibility
 import com.sarvagya.android.ui.home.feeds.FeedsAdapter.FeedsViewHolder
 import com.sarvagya.android.ui.home.feeds.view.FeedVM
 import kotlinx.coroutines.channels.BroadcastChannel
@@ -57,5 +55,6 @@ class FeedsAdapter(private var feeds: List<FeedVM>) : Adapter<FeedsViewHolder>()
                 feedIV.loadImage(feed.thumbnail)
             }
         }
+
     }
 }

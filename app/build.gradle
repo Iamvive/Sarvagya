@@ -77,6 +77,7 @@ dependencies {
 
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+
     //Image Lib
     implementation "io.coil-kt:coil:0.9.1"
 
