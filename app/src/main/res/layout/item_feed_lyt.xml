@@ -8,11 +8,11 @@
     android:padding="4dp"
     android:layout_marginTop="4dp">
 
-    <androidx.appcompat.widget.AppCompatImageButton
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/feedIV"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:scaleType="fitCenter" />
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"/>
 
     <RelativeLayout
         android:layout_below="@+id/feedIV"
