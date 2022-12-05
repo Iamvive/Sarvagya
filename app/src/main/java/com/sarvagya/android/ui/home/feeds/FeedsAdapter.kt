@@ -5,8 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import coil.api.load
-import coil.transform.CircleCropTransformation
 import com.sarvagya.android.databinding.ItemFeedLytBinding
 import com.sarvagya.android.extension.loadImage
 import com.sarvagya.android.ui.home.feeds.FeedsAdapter.FeedsViewHolder
@@ -55,6 +53,5 @@ class FeedsAdapter(private var feeds: List<FeedVM>) : Adapter<FeedsViewHolder>()
                 feedIV.loadImage(feed.thumbnail)
             }
         }
-
     }
 }
