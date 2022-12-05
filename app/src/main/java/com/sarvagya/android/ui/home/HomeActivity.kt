@@ -25,7 +25,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.homeNavigation.setOnItemSelectedListener(this)
-        loadFragment(FEEDS)
+        loadFragment(DONATION)
     }
 
     override fun onResume() {
