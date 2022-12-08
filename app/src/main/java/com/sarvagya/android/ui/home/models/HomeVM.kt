@@ -12,5 +12,6 @@ enum class Menus{
     FEEDS,
     VIDEOS,
     DONATION,
-    APPOINTMENTS
+    APPOINTMENTS,
+    VIDEOPLAYER,
 }

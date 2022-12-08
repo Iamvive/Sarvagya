@@ -9,20 +9,22 @@
     android:padding="4dp"
     android:layout_marginTop="4dp">
 
-    <androidx.media3.ui.PlayerView
-        android:id="@+id/feedIV"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:scaleType="fitCenter" />
+   <ImageView
+       android:id="@+id/ivVideo"
+       android:layout_width="match_parent"
+       android:layout_height="150dp"
+       android:src="@drawable/video"
+       android:scaleType="fitXY"
+       />
 
     <RelativeLayout
-        android:layout_below="@+id/feedIV"
+        android:layout_below="@+id/ivVideo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp">
 
         <TextView
-            android:id="@+id/feedTitleTV"
+            android:id="@+id/videoTitleTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -32,18 +34,18 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            tools:text="Title" />
+            tools:text="आज है मार्गशीर्ष माह की विनायक चतुर्थी, जानें शुभ मुहूर्त, पूजन विधि और महत्व" />
 
         <TextView
             android:id="@+id/durationTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/feedTitleTV"
+            android:layout_below="@+id/videoTitleTV"
             android:layout_marginTop="4dp"
             android:layout_alignParentEnd="true"
             android:textSize="11sp"
             android:textAlignment="viewEnd"
-            tools:text="duration" />
+            tools:text="1 घंटा पहले" />
 
     </RelativeLayout>
 

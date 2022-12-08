@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sarvagya.android.databinding.ItemVideoLayoutBinding
 
-class VideosAdapter() : Adapter<VideosAdapter.VideosViewHolder>() {
+class VideosAdapter(
+    private val listener: VideoAdapterOnClickListener,
+) : Adapter<VideosAdapter.VideosViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideosViewHolder {
         val viewBinding = ItemVideoLayoutBinding.inflate(LayoutInflater.from(parent.context))
@@ -14,14 +16,20 @@ class VideosAdapter() : Adapter<VideosAdapter.VideosViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: VideosViewHolder, position: Int) {
+        holder.bind()
     }
 
     override fun getItemCount(): Int {
         return 7
     }
 
-    inner class VideosViewHolder(private val binding: ItemVideoLayoutBinding) :
-        ViewHolder(binding.root) {
+    inner class VideosViewHolder(private val binding: ItemVideoLayoutBinding) : ViewHolder(binding.root) {
+        fun bind(){
+            binding.ivVideo.setOnClickListener {
+                listener.onClick()
+            }
+        }
     }
+
 
 }

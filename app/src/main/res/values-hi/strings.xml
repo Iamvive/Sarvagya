@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">सर्वज्ञ</string>
+    <string name="donating_to">दानी</string>
+    <string name="feeds">सुविचार</string>
+    <string name="videos">वीडियो</string>
+    <string name="donation">दान करें</string>
+    <string name="appointment">नियुक्ति</string>
+</resources>

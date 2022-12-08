@@ -9,15 +9,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sarvagya.android.databinding.FragmentVideosBinding
 
-class VideosFragment : Fragment() {
+class VideosFragment(private val listener: VideoAdapterOnClickListener) : Fragment() {
 
     private lateinit var videosBinding: FragmentVideosBinding
-    private val videosAdapter by lazy { VideosAdapter() }
+    private val videosAdapter by lazy { VideosAdapter(listener) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         videosBinding = FragmentVideosBinding.inflate(layoutInflater)
         setUpVideosList()
         return videosBinding.root
@@ -29,4 +29,5 @@ class VideosFragment : Fragment() {
             adapter = videosAdapter
         }
     }
+
 }

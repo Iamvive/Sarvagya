@@ -11,12 +11,24 @@
        android:layout_width="match_parent"
        android:layout_height="52dp"
        android:layout_gravity="top"
+       android:background="@color/white"
        >
        <Toolbar
            android:id="@+id/toolbar"
            android:layout_width="match_parent"
            android:layout_height="match_parent"
-           />
+           >
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/app_name"
+               android:textStyle="bold"
+               android:textSize="24sp"
+               android:layout_gravity="center"
+               android:id="@+id/toolbar_title"
+               />
+
+       </Toolbar>
 
    </com.google.android.material.appbar.AppBarLayout>
 

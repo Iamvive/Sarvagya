@@ -3,20 +3,20 @@
     <item
         android:id="@+id/feeds"
         android:icon="@drawable/ic_feeds"
-        android:title="Feeds"
+        android:title="@string/feeds"
         />
     <item
         android:id="@+id/videos"
         android:icon="@drawable/ic_video"
-        android:title="Videos" />
+        android:title="@string/videos" />
     <item
         android:id="@+id/donation"
-        android:title="Donation"
+        android:title="@string/donation"
         android:icon="@drawable/ic_payment"
         />
     <item
         android:id="@+id/appointment"
-        android:title="Appointment"
+        android:title="@string/appointment"
         android:icon="@drawable/ic_appoint"
         />
 </menu>
