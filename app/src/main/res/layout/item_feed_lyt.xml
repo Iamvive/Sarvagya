@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:elevation="2dp"
-    android:padding="4dp"
-    android:layout_marginTop="4dp">
+    >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_feed_item_border"
+    android:layout_margin="10dp"
+    android:elevation="5dp"
+    android:padding="4dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/feedIV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY" />
 
     <RelativeLayout
-        android:layout_below="@+id/feedIV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/feedIV"
         android:layout_marginTop="4dp">
 
         <TextView
@@ -25,11 +29,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:layout_marginBottom="10dp"
             android:ellipsize="end"
             android:maxLines="1"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
             tools:text="Title" />
 
         <TextView
@@ -37,8 +42,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/feedTitleTV"
-            android:layout_marginTop="4dp"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="4dp"
+            android:layout_toStartOf="@+id/durationTV"
             android:ellipsize="end"
             android:maxLines="1"
             android:textSize="11sp"
@@ -49,14 +55,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/feedTitleTV"
-            android:layout_toEndOf="@+id/feedDescTV"
-            android:layout_toStartOf="@+id/durationTV"
             android:layout_marginHorizontal="4dp"
             android:layout_marginTop="4dp"
-            android:textStyle="bold"
+            android:layout_toStartOf="@+id/durationTV"
+            android:layout_toEndOf="@+id/feedDescTV"
             android:ellipsize="end"
             android:maxLines="1"
             android:textSize="11sp"
+            android:textStyle="bold"
             tools:text="+readMore" />
 
         <TextView
@@ -64,11 +70,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/feedTitleTV"
-            android:layout_marginTop="4dp"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="4dp"
+            android:paddingBottom="10dp"
             android:textSize="11sp"
-            tools:text="duration" />
+            tools:text="duration"
+
+            />
 
     </RelativeLayout>
 
 </RelativeLayout>
+</LinearLayout>

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:elevation="2dp"
-    android:padding="4dp"
-    android:layout_marginTop="4dp">
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_feed_item_border"
+        android:layout_margin="10dp"
+        android:elevation="5dp"
+        android:padding="4dp">
 
    <ImageView
        android:id="@+id/ivVideo"
@@ -34,7 +37,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            tools:text="आज है मार्गशीर्ष माह की विनायक चतुर्थी, जानें शुभ मुहूर्त, पूजन विधि और महत्व" />
+            tools:text="title" />
 
         <TextView
             android:id="@+id/durationTV"
@@ -45,8 +48,9 @@
             android:layout_alignParentEnd="true"
             android:textSize="11sp"
             android:textAlignment="viewEnd"
-            tools:text="1 घंटा पहले" />
+            tools:text="duration" />
 
     </RelativeLayout>
 
 </RelativeLayout>
+</LinearLayout>

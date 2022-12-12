@@ -11,15 +11,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sarvagya.android.databinding.FragmentFeedsBinding
 import com.sarvagya.android.root.SarvagyaApplication
 import com.sarvagya.android.ui.home.feeds.FeedsAdapter
+import com.sarvagya.android.ui.home.feeds.FeedsListener
 import com.sarvagya.android.ui.home.feeds.FeedsViewModel
 import com.sarvagya.android.ui.home.feeds.FeedsViewModelFactory
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class FeedsFragment : Fragment(), FeedsPresenter {
+class FeedsFragment(private val listener: FeedsListener) : Fragment(), FeedsPresenter {
 
     private lateinit var feedsBinding: FragmentFeedsBinding
-    private val feedsAdapter by lazy { FeedsAdapter(listOf()) }
+    private val feedsAdapter by lazy { FeedsAdapter(listOf(),listener) }
     private lateinit var feedsViewModel: FeedsViewModel
     @Inject lateinit var feedsViewModelFactory: FeedsViewModelFactory
 
@@ -57,7 +58,7 @@ class FeedsFragment : Fragment(), FeedsPresenter {
 
     private fun setUpFeedList() {
         feedsBinding.feedsRV.apply {
-            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = feedsAdapter
         }
     }

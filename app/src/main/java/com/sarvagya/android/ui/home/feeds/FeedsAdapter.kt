@@ -14,7 +14,7 @@ import com.sarvagya.android.ui.home.feeds.view.FeedVM
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 
-class FeedsAdapter(private var feeds: List<FeedVM>) : Adapter<FeedsViewHolder>() {
+class FeedsAdapter(private var feeds: List<FeedVM>,private val listener: FeedsListener) : Adapter<FeedsViewHolder>() {
 
     private val itemChannel = BroadcastChannel<String>(1)
     val itemClickFlow = itemChannel.asFlow()
@@ -46,13 +46,18 @@ class FeedsAdapter(private var feeds: List<FeedVM>) : Adapter<FeedsViewHolder>()
                 //Register Listener here
                 itemChannel.trySend(feeds[adapterPosition].id)
             }
+
         }
 
         fun bindData(feed: FeedVM) {
             binding.apply {
                 feedTitleTV.text = feed.title
                 feedDescTV.text = feed.desc
+                durationTV.text = "1 घंटे पहले"
                 feedIV.loadImage(feed.thumbnail)
+            }
+            binding.root.setOnClickListener {
+                listener.onClickFeeds()
             }
         }
 
