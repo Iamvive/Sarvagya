@@ -21,4 +21,5 @@ abstract class BindModule{
     @Binds
     @Singleton
     abstract fun createFeedsService(feedsService: HttpFeedsService) : FeedsService
+
 }

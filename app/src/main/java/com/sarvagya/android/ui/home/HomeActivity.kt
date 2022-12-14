@@ -19,6 +19,7 @@ import com.sarvagya.android.ui.home.models.HomeVM
 import com.sarvagya.android.ui.home.models.Menus
 import com.sarvagya.android.ui.home.models.Menus.*
 import com.sarvagya.android.ui.home.videos.VideoAdapterOnClickListener
+import com.sarvagya.android.ui.home.videos.VideoPlayerActivity
 import com.sarvagya.android.ui.home.videos.VideoPlayerFragment
 import com.sarvagya.android.ui.home.videos.VideosFragment
 
@@ -62,6 +63,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         //setting menu icon for drawer
         binding.toolbar.navigationIcon = resources.getDrawable(drawable.ic_menu)
+
     }
 
     private fun renderHeaderView(vm: HeaderVM) {
@@ -93,7 +95,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         when (item.itemId) {
             id.feeds -> {
 
-                binding.toolbar.title = "Feed"
+                binding.toolbar.title = "News"
                 loadFragment(FEEDS)
             }
             id.videos -> {
@@ -132,14 +134,15 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     override fun onClick() {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(id.mainContainer, getFragment(VIDEOPLAYER))
-        transaction.addToBackStack(null)
-        transaction.commit()
+        val intent = Intent(this, VideoPlayerActivity::class.java)
+        startActivity(intent)
     }
 
-    override fun onClickFeeds() {
-        startActivity(Intent(this, FeedDetailActivity::class.java))
+    override fun onClickFeeds(id:String) {
+        val intent = Intent(this, FeedDetailActivity::class.java).apply{
+            putExtra("feedId",id)
+        }
+        startActivity(intent)
     }
 
 }

@@ -29,5 +29,6 @@ private fun Feed.toVM() = FeedVM(
     desc = desc,
     thumbnail = thumbnail,
     language = language,
+    duration = duration
 )
 

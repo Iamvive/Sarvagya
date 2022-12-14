@@ -11,4 +11,5 @@ data class FeedVM(
     val desc: String,
     val thumbnail: String,
     val language: String,
+    val duration: String,
 )

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Feed(
+data class FeedDetail(
     @SerialName("id")
     val id: Int,
     @SerialName("title")

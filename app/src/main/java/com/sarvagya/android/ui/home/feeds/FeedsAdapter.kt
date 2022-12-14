@@ -53,11 +53,11 @@ class FeedsAdapter(private var feeds: List<FeedVM>,private val listener: FeedsLi
             binding.apply {
                 feedTitleTV.text = feed.title
                 feedDescTV.text = feed.desc
-                durationTV.text = "1 घंटे पहले"
+                durationTV.text = feed.duration
                 feedIV.loadImage(feed.thumbnail)
             }
             binding.root.setOnClickListener {
-                listener.onClickFeeds()
+                listener.onClickFeeds(feed.id)
             }
         }
 

@@ -1,5 +1,6 @@
 package com.sarvagya.android.root.dagger
 
+import com.sarvagya.android.ui.home.feeds.FeedDetailActivity
 import com.sarvagya.android.ui.home.feeds.data.http.FeedsService
 import com.sarvagya.android.ui.home.feeds.view.FeedsFragment
 import dagger.Component
@@ -15,5 +16,7 @@ interface AppComponent {
     fun provideFeedsService() : FeedsService
 
     fun inject(fragment : FeedsFragment)
+
+    fun inject(activity : FeedDetailActivity)
 
 }

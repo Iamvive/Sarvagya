@@ -2,6 +2,8 @@ package com.sarvagya.android.ui.home.feeds
 
 import androidx.lifecycle.*
 import com.sarvagya.android.ui.home.feeds.data.http.FeedsService
+import com.sarvagya.android.ui.home.feeds.data.models.Feed
+import com.sarvagya.android.ui.home.feeds.data.models.FeedDetail
 import com.sarvagya.android.ui.home.feeds.data.models.toVM
 import com.sarvagya.android.ui.home.feeds.view.FeedVM
 import kotlinx.coroutines.launch
@@ -14,9 +16,12 @@ class FeedsViewModel(
     }
 
     private val mutablePosts = MutableLiveData<List<FeedVM>>()
+    private val mutableFeedDetail = MutableLiveData<FeedDetail>()
 
-    val livePost: LiveData<List<FeedVM>>
-        get() = mutablePosts
+    val livePost: LiveData<List<FeedVM>>  get() = mutablePosts
+
+    val liveFeedDetail: LiveData<FeedDetail>    get() = mutableFeedDetail
+
 
     fun fetchFeeds() {
         viewModelScope.launch {
@@ -26,7 +31,17 @@ class FeedsViewModel(
             } catch (e: Exception) {
                 e.message
             }
+        }
+    }
 
+    fun fetchFeedDetail(id:String) {
+        viewModelScope.launch {
+            try {
+                val feedResponse = feedsService.fetchFeedDetail(id)
+                mutableFeedDetail.postValue(feedResponse.feed)
+            } catch (e: Exception) {
+                e.message
+            }
         }
     }
 
