@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dimens_4_dp">
+
+    <ImageView
+        android:id="@+id/albumIV"
+        android:layout_width="@dimen/dimens_100_dp"
+        android:layout_height="@dimen/dimens_100_dp" />
+
+    <TextView
+        android:id="@+id/albumTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/albumIV"
+        android:layout_alignStart="@+id/albumIV"
+        android:layout_alignEnd="@+id/albumIV"
+        android:gravity="center_horizontal"
+        android:paddingVertical="@dimen/dimens_4_dp"
+        android:text="Hanuman Ji"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimens_14_sp" />
+</RelativeLayout>
