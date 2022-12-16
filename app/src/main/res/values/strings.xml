@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Sarvagya</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="donating_to">Donating To</string>
-    <string name="feeds">News</string>
+    <string name="news">News</string>
     <string name="videos">Videos</string>
     <string name="donation">Donation</string>
     <string name="appointment">Appointment</string>
     <string name="media_url_dash">https://sarvagya.blob.core.windows.net/videos/sample-video.mp4</string>
-
+    <string name="exit_msg">Please press again to exit.</string>
+    <string name="album_thumbnail">Album Thumbnail</string>
 </resources>

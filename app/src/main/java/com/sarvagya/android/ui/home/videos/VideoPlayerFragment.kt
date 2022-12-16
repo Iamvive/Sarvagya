@@ -1,6 +1,7 @@
 package com.sarvagya.android.ui.home.videos
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -107,15 +108,17 @@ class VideoPlayerFragment(private val activity: HomeActivity) : Fragment() {
                 }
 
                 val mediaItem = MediaItem.Builder()
-                    .setUri(getString(R.string.media_url_dash))
+                    .setUri(Uri.parse("https://sarvagya.blob.core.windows.net/videos/sample-video.mp4"))
                     .setMimeType(MimeTypes.APPLICATION_MPD)
                     .build()
+
                 exoPlayer.setMediaItem(mediaItem)
                 exoPlayer.playWhenReady = playWhenReady
                 Log.i(TAG, "initializePlayer: playbackPosition: $playbackPosition")
                 exoPlayer.seekTo(currentItem, playbackPosition)
                 exoPlayer.addListener(playbackStateListener)
                 exoPlayer.prepare()
+
             }
     }
 

@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/feeds"
-        android:icon="@drawable/ic_feeds"
-        android:title="@string/feeds"
+        android:icon="@drawable/ic_news"
+        android:title="@string/news"
         />
     <item
         android:id="@+id/videos"

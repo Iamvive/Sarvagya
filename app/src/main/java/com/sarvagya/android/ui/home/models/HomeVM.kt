@@ -6,7 +6,6 @@ data class HomeVM(
 )
 data class HeaderVM(
     val title : String,
-    val iconRes : Int?
 )
 enum class Menus{
     FEEDS,

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,70 +10,79 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="@dimen/dimen_52_dp"
         android:layout_gravity="top"
+        android:layout_marginBottom="@dimen/dimens_10_dp"
         android:background="@color/white">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:navigationIcon="@drawable/ic_back">
 
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dimens_10_dp"
+        android:background="@drawable/bg_feed_item_border"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/feedIV"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY" />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/durationTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/feedIV"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="4dp"
-            android:paddingBottom="10dp"
-            android:textSize="11sp"
-            tools:text="duration"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/feedIV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimens_10_dp"
+                android:scaleType="fitXY" />
 
-            />
+            <TextView
+                android:id="@+id/durationTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/feedIV"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/dimens_4_dp"
+                android:paddingBottom="@dimen/dimens_10_dp"
+                android:textSize="@dimen/dimen_11_sp"
+                tools:text="duration"
 
-        <TextView
-            android:id="@+id/feedTitleTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/durationTV"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="title"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+                />
 
-        <TextView
-            android:id="@+id/feedDescTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/feedTitleTV"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="10dp"
-            android:ellipsize="end"
-            android:textSize="11sp"
-            tools:text="description" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/feedTitleTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/durationTV"
+                android:layout_marginHorizontal="@dimen/dimens_10_dp"
+                android:layout_marginTop="@dimen/dimens_2_dp"
+                android:layout_marginBottom="@dimen/dimens_10_dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimens_14_sp"
+                android:textStyle="bold"
+                tools:text="title" />
+
+            <TextView
+                android:id="@+id/feedDescTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/feedTitleTV"
+                android:layout_alignParentStart="true"
+                android:layout_marginHorizontal="@dimen/dimens_10_dp"
+                android:layout_marginTop="@dimen/dimens_4_dp"
+                android:ellipsize="end"
+                android:textSize="@dimen/dimen_11_sp"
+                tools:text="description" />
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

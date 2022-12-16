@@ -2,55 +2,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_feed_item_border"
         android:layout_margin="10dp"
+        android:background="@drawable/bg_feed_item_border"
         android:elevation="5dp"
         android:padding="4dp">
 
-   <ImageView
-       android:id="@+id/ivVideo"
-       android:layout_width="match_parent"
-       android:layout_height="150dp"
-       android:src="@drawable/video"
-       android:scaleType="fitXY"
-       />
+        <ImageView
+            android:id="@+id/ivVideo"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/video" />
 
-    <RelativeLayout
-        android:layout_below="@+id/ivVideo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp">
-
-        <TextView
-            android:id="@+id/videoTitleTV"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textAlignment="viewStart"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            tools:text="title" />
+            android:layout_below="@+id/ivVideo"
+            android:layout_marginTop="4dp">
 
-        <TextView
-            android:id="@+id/durationTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/videoTitleTV"
-            android:layout_marginTop="4dp"
-            android:layout_alignParentEnd="true"
-            android:textSize="11sp"
-            android:textAlignment="viewEnd"
-            tools:text="duration" />
+            <TextView
+                android:id="@+id/videoTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="title" />
+
+            <TextView
+                android:id="@+id/durationTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/videoTitleTV"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="4dp"
+                android:textAlignment="viewEnd"
+                android:textSize="11sp"
+                tools:text="duration" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
-
-</RelativeLayout>
 </LinearLayout>

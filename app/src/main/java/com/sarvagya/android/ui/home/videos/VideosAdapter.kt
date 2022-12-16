@@ -23,9 +23,11 @@ class VideosAdapter(
         return 7
     }
 
-    inner class VideosViewHolder(private val binding: ItemVideoLayoutBinding) : ViewHolder(binding.root) {
-        fun bind(){
-            binding.videoTitleTV.text = "आज है मार्गशीर्ष माह की विनायक चतुर्थी, जानें शुभ मुहूर्त, पूजन विधि और महत्व"
+    inner class VideosViewHolder(private val binding: ItemVideoLayoutBinding) :
+        ViewHolder(binding.root) {
+        fun bind() {
+            binding.videoTitleTV.text =
+                "आज है मार्गशीर्ष माह की विनायक चतुर्थी, जानें शुभ मुहूर्त, पूजन विधि और महत्व"
             binding.durationTV.text = "1 घंटा पहले"
             binding.ivVideo.setOnClickListener {
                 listener.onClick()

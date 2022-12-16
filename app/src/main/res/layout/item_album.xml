@@ -2,12 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginHorizontal="@dimen/dimens_4_dp">
 
     <ImageView
         android:id="@+id/albumIV"
         android:layout_width="@dimen/dimens_100_dp"
-        android:layout_height="@dimen/dimens_100_dp" />
+        android:layout_height="@dimen/dimens_100_dp"
+        android:contentDescription="@string/album_thumbnail"/>
 
     <TextView
         android:id="@+id/albumTV"
@@ -18,7 +20,7 @@
         android:layout_alignEnd="@+id/albumIV"
         android:gravity="center_horizontal"
         android:paddingVertical="@dimen/dimens_4_dp"
-        android:text="Hanuman Ji"
+        tools:text="Hanuman Ji"
         android:textColor="@color/black"
         android:textSize="@dimen/dimens_14_sp" />
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.sarvagya.android.ui.home.videos
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -30,7 +31,7 @@ class VideoPlayerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_video_player)
+        setContentView(viewBinding.root)
     }
 
     override fun onStart() {
@@ -39,8 +40,6 @@ class VideoPlayerActivity : AppCompatActivity() {
             initializePlayer()
         }
     }
-
-
 
     override fun onResume() {
         super.onResume()
@@ -97,11 +96,9 @@ class VideoPlayerActivity : AppCompatActivity() {
                     resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
                 }
 
-                val mediaItem = MediaItem.Builder()
-                    .setUri(getString(R.string.media_url_dash))
-                    .setMimeType(MimeTypes.APPLICATION_MPD)
-                    .build()
+                val mediaItem = MediaItem.fromUri(Uri.parse("https://sarvagya.blob.core.windows.net/videos/sample-video.mp4"))
                 exoPlayer.setMediaItem(mediaItem)
+
                 exoPlayer.playWhenReady = playWhenReady
                 Log.i("VideoPlayerActivity", "initializePlayer: playbackPosition: $playbackPosition")
                 exoPlayer.seekTo(currentItem, playbackPosition)
@@ -109,8 +106,7 @@ class VideoPlayerActivity : AppCompatActivity() {
                 exoPlayer.prepare()
             }
     }
-
-
+    
     private fun playbackStateListener() = object : Player.Listener {
         override fun onPlaybackStateChanged(playbackState: Int) {
             val stateString: String = when (playbackState) {

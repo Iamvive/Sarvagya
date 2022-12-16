@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimens_4_dp"
+        app:cardCornerRadius="@dimen/dimens_16_dp">
+
+        <ImageView
+            android:id="@+id/newsIV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/news"
+            android:scaleType="fitXY" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_blur">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/dimens_4_dp"
+                android:layout_marginBottom="@dimen/dimens_8_dp">
+
+                <TextView
+                    android:id="@+id/newsTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimens_14_sp"
+                    android:textStyle="bold"
+                    tools:text="Title" />
+
+                <TextView
+                    android:id="@+id/newsDescTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/newsTV"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="@dimen/dimens_4_dp"
+                    android:layout_marginEnd="@dimen/dimens_4_dp"
+                    android:layout_toStartOf="@+id/newsTime"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_11_sp"
+                    tools:text="Desc" />
+
+                <TextView
+                    android:id="@+id/newsTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/newsTV"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/dimens_4_dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimen_11_sp"
+                    tools:text="Duration" />
+            </RelativeLayout>
+        </FrameLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>
