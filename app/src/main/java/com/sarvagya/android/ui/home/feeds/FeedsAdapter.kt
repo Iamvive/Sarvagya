@@ -9,11 +9,13 @@ import com.sarvagya.android.databinding.ItemNewsLytBinding
 import com.sarvagya.android.extension.loadImage
 import com.sarvagya.android.ui.home.feeds.FeedsAdapter.FeedsViewHolder
 import com.sarvagya.android.ui.home.feeds.view.FeedVM
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 
 class FeedsAdapter(private var feeds: List<FeedVM>) : Adapter<FeedsViewHolder>() {
 
+    @OptIn(ObsoleteCoroutinesApi::class)
     private val itemChannel = BroadcastChannel<String>(1)
     val itemClickFlow = itemChannel.asFlow()
 
@@ -35,6 +37,7 @@ class FeedsAdapter(private var feeds: List<FeedVM>) : Adapter<FeedsViewHolder>()
         notifyDataSetChanged()
     }
 
+    @OptIn(ObsoleteCoroutinesApi::class)
     inner class FeedsViewHolder(private val binding: ItemNewsLytBinding) : ViewHolder(binding.root) {
 
         init {
