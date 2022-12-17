@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">सर्वज्ञ</string>
+    <string name="donating_to">दानी</string>
+    <string name="news">सुविचार</string>
+    <string name="videos">वीडियो</string>
+    <string name="donation">दान करें</string>
+    <string name="appointment">नियुक्ति</string>
+    <string name="media_url_dash">https://sarvagya.blob.core.windows.net/videos/sample-video.mp4</string>
+    <string name="exit_msg">Please press again to exit.</string>
+</resources>

@@ -5,20 +5,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.sarvagya.android.databinding.ItemFeedLytBinding
-import com.sarvagya.android.extension.setTextWithVisibility
+import com.sarvagya.android.databinding.ItemNewsLytBinding
+import com.sarvagya.android.extension.loadImage
 import com.sarvagya.android.ui.home.feeds.FeedsAdapter.FeedsViewHolder
-import com.sarvagya.android.ui.home.feeds.view.FeedsVM.Feed
+import com.sarvagya.android.ui.home.feeds.view.FeedVM
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 
-class FeedsAdapter(private var feeds: List<Feed>) : Adapter<FeedsViewHolder>() {
+class FeedsAdapter(private var feeds: List<FeedVM>) : Adapter<FeedsViewHolder>() {
 
-    private val itemChannel = BroadcastChannel<Long>(1)
+    @OptIn(ObsoleteCoroutinesApi::class)
+    private val itemChannel = BroadcastChannel<String>(1)
     val itemClickFlow = itemChannel.asFlow()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedsViewHolder {
-        val viewBinding = ItemFeedLytBinding.inflate(LayoutInflater.from(parent.context))
+        val viewBinding = ItemNewsLytBinding.inflate(LayoutInflater.from(parent.context))
         return FeedsViewHolder(viewBinding)
     }
 
@@ -30,28 +32,29 @@ class FeedsAdapter(private var feeds: List<Feed>) : Adapter<FeedsViewHolder>() {
         return feeds.size
     }
 
-    fun updateFeeds(feeds: List<Feed>) {
+    fun updateFeeds(feeds: List<FeedVM>) {
         this.feeds = feeds
         notifyDataSetChanged()
     }
 
-    inner class FeedsViewHolder(private val binding: ItemFeedLytBinding) :
-        ViewHolder(binding.root) {
+    @OptIn(ObsoleteCoroutinesApi::class)
+    inner class FeedsViewHolder(private val binding: ItemNewsLytBinding) : ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {
-                if (adapterPosition != RecyclerView.NO_POSITION) return@setOnClickListener
+                if (adapterPosition == RecyclerView.NO_POSITION) return@setOnClickListener
                 //Register Listener here
                 itemChannel.trySend(feeds[adapterPosition].id)
             }
+
         }
 
-        fun bindData(feed: Feed) {
+        fun bindData(feed: FeedVM) {
             binding.apply {
-                feedTitleTV.text = feed.title
-                feedDescTV.text = feed.desc
-                readMoreTV.setTextWithVisibility(feed.readMoreTxt)
-                durationTV.setTextWithVisibility(feed.durationTxt)
+                newsTV.text = feed.title
+                newsDescTV.text = feed.desc
+                newsTime.text = feed.duration
+                newsIV.loadImage(feed.thumbnail)
             }
         }
     }

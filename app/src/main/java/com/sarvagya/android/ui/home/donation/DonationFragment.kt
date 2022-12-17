@@ -1,18 +1,46 @@
 package com.sarvagya.android.ui.home.donation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams
+import android.view.ViewGroup.LayoutParams.*
+import androidx.fragment.app.Fragment
+import com.google.android.material.chip.Chip
 import com.sarvagya.android.R
+import com.sarvagya.android.databinding.FragmentDonationBinding
+import com.sarvagya.android.databinding.FragmentFeedsBinding
 
 class DonationFragment : Fragment() {
+    
+    private lateinit var binding: FragmentDonationBinding
+    private val amountList = listOf("+50", "+100", "+150", "+200")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_feeds, container, false)
+    ): View {
+        binding = FragmentDonationBinding.inflate(layoutInflater)
+        return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpAmountSelectionView()
+    }
+
+    private fun setUpAmountSelectionView() {
+       val chipWidth = 200
+        amountList.forEach {
+            val chip = Chip(binding.amountChips.context)
+                .apply {
+                    text = it
+                    isClickable = true
+                    layoutParams = LayoutParams(chipWidth, MATCH_PARENT)
+                }
+            binding.amountChips.addView(chip)
+        }
+    }
+
 }

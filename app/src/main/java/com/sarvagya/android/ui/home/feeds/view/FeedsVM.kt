@@ -1,17 +1,15 @@
 package com.sarvagya.android.ui.home.feeds.view
 
-class FeedsVM {
-    data class Feeds(
-        val feeds : List<Feed>,
-    )
+data class FeedsVM(
+    val feeds: List<FeedVM>,
+)
 
-    data class Feed(
-        val id: Long,
-        val title: String,
-        val desc: String,
-        val readMoreTxt: String,
-        val durationTxt: String,
-        val thumbnailUrl: String,
-        val streamingUrl: String,
-    )
-}
+data class FeedVM(
+    val id: String,
+    val title: String,
+    val descShort: String?,
+    val desc: String,
+    val thumbnail: String,
+    val language: String,
+    val duration: String,
+)
