@@ -55,6 +55,7 @@ class FeedDetailActivity : AppCompatActivity() {
                 binding.apply {
                     feedTitleTV.text = feed.title
                     feedDescTV.text = feed.desc
+                    durationTV.text = feed.duration
                     feedIV.loadImage(feed.thumbnail)
                 }
             }
