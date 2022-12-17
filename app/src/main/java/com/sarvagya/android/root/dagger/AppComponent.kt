@@ -1,6 +1,5 @@
 package com.sarvagya.android.root.dagger
 
-import android.app.Application
 import android.content.Context
 import com.sarvagya.android.root.SarvagyaApplication
 import com.sarvagya.android.ui.home.HomeActivity

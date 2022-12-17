@@ -16,5 +16,4 @@ class SarvagyaApplication : Application() {
             .appModule(AppModule(this))
             .build()
     }
-
 }
