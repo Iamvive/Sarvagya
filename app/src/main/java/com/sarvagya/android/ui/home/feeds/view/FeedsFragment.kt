@@ -42,7 +42,6 @@ class FeedsFragment(private val listener: FeedsListener) :
         )[FeedsViewModel::class.java]
         feedsViewModel.fetchFeeds()
         feedsViewModel.handlePresenter(this, listener)
-
         return feedsBinding.root
     }
 

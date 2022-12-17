@@ -1,10 +1,13 @@
-package com.sarvagya.android.ui.home.videos
+package com.sarvagya.android.ui.home.videos.view
 
 import android.annotation.SuppressLint
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -15,13 +18,19 @@ import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import androidx.media3.ui.AspectRatioFrameLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sarvagya.android.R
-import com.sarvagya.android.databinding.ActivityVideoPlayerBinding
+import com.sarvagya.android.databinding.FragmentVideoPlayerBinding
+import com.sarvagya.android.databinding.FragmentVideosBinding
+import com.sarvagya.android.ui.home.HomeActivity
 
-class VideoPlayerActivity : AppCompatActivity() {
+private const val TAG = "PlayerActivity"
+
+class VideoPlayerFragment(private val activity: HomeActivity) : Fragment() {
 
     private val viewBinding by lazy(LazyThreadSafetyMode.NONE) {
-        ActivityVideoPlayerBinding.inflate(layoutInflater)
+        FragmentVideoPlayerBinding.inflate(layoutInflater)
     }
     private val playbackStateListener: Player.Listener = playbackStateListener()
     private var player: ExoPlayer? = null
@@ -29,9 +38,11 @@ class VideoPlayerActivity : AppCompatActivity() {
     private var currentItem = 0
     private var playbackPosition = 0L
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(viewBinding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return viewBinding.root
     }
 
     override fun onStart() {
@@ -76,18 +87,18 @@ class VideoPlayerActivity : AppCompatActivity() {
 
     @SuppressLint("InlinedApi")
     private fun hideSystemUi() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsControllerCompat(window, viewBinding.videoView).let { controller ->
+        WindowCompat.setDecorFitsSystemWindows(activity.window, false)
+        WindowInsetsControllerCompat(activity.window, viewBinding.videoView).let { controller ->
             controller.hide(WindowInsetsCompat.Type.systemBars())
             controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
 
     private fun initializePlayer() {
-        val trackSelector = DefaultTrackSelector(applicationContext).apply {
+        val trackSelector = DefaultTrackSelector(activity.applicationContext).apply {
             setParameters(buildUponParameters().setMaxVideoSizeSd())
         }
-        player = ExoPlayer.Builder(applicationContext)
+        player = ExoPlayer.Builder(activity.applicationContext)
             .setTrackSelector(trackSelector)
             .build()
             .also { exoPlayer ->
@@ -96,17 +107,22 @@ class VideoPlayerActivity : AppCompatActivity() {
                     resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
                 }
 
-                val mediaItem = MediaItem.fromUri(Uri.parse("https://sarvagya.blob.core.windows.net/videos/sample-video.mp4"))
-                exoPlayer.setMediaItem(mediaItem)
+                val mediaItem = MediaItem.Builder()
+                    .setUri(Uri.parse("https://sarvagya.blob.core.windows.net/videos/sample-video.mp4"))
+                    .setMimeType(MimeTypes.APPLICATION_MPD)
+                    .build()
 
+                exoPlayer.setMediaItem(mediaItem)
                 exoPlayer.playWhenReady = playWhenReady
-                Log.i("VideoPlayerActivity", "initializePlayer: playbackPosition: $playbackPosition")
+                Log.i(TAG, "initializePlayer: playbackPosition: $playbackPosition")
                 exoPlayer.seekTo(currentItem, playbackPosition)
                 exoPlayer.addListener(playbackStateListener)
                 exoPlayer.prepare()
+
             }
     }
-    
+
+
     private fun playbackStateListener() = object : Player.Listener {
         override fun onPlaybackStateChanged(playbackState: Int) {
             val stateString: String = when (playbackState) {
@@ -116,7 +132,7 @@ class VideoPlayerActivity : AppCompatActivity() {
                 ExoPlayer.STATE_ENDED -> "ExoPlayer.STATE_ENDED     -"
                 else -> "UNKNOWN_STATE             -"
             }
-            Log.d("VideoPlayerActivity", "changed state to $stateString")
+            Log.d(TAG, "changed state to $stateString")
         }
     }
 

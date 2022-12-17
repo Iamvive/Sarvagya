@@ -26,13 +26,15 @@ import com.sarvagya.android.ui.home.models.HomeVM
 import com.sarvagya.android.ui.home.models.Menus
 import com.sarvagya.android.ui.home.models.Menus.*
 import com.sarvagya.android.ui.home.videos.VideoAdapterOnClickListener
-import com.sarvagya.android.ui.home.videos.VideoPlayerActivity
-import com.sarvagya.android.ui.home.videos.VideoPlayerFragment
-import com.sarvagya.android.ui.home.videos.VideosFragment
+import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity
+import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity.Companion.VIDEO_DATA
+import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity.Companion.VIDEO_ID
+import com.sarvagya.android.ui.home.videos.view.VideoPlayerFragment
+import com.sarvagya.android.ui.home.videos.view.VideosFragment
 import javax.inject.Inject
 
-class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
-    VideoAdapterOnClickListener {
+class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener
+    {
 
     private lateinit var binding: ActivityHomeBinding
     private var counter = 0
@@ -81,7 +83,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private fun loadFragment(selectedItem: Menus) {
         when (selectedItem) {
             FEEDS -> FeedsFragment(FeedsListenerImpl()).attachWithReplace(this)
-            VIDEOS -> VideosFragment(this).attachWithReplace(this)
+            VIDEOS -> VideosFragment(VideoAdapterOnClickListenerImpl()).attachWithReplace(this)
             DONATION -> DonationFragment().attachWithReplace(this)
             APPOINTMENTS -> AppointmentFragment().attachWithReplace(this)
             VIDEOPLAYER -> VideoPlayerFragment(this).attachWithReplace(this)
@@ -94,6 +96,14 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 FeedDetailActivity::class.java, shouldFinish = false,
                 bundleKey = FEED_DATA, bundle = Bundle().apply { putString(FEED_ID, id) }
             )
+        }
+    }
+
+    inner class VideoAdapterOnClickListenerImpl :VideoAdapterOnClickListener{
+        override fun onClick(id:Int) {
+            navigateToActivity(VideoPlayerActivity::class.java, shouldFinish = false,
+                bundleKey = VIDEO_DATA, bundle = Bundle().apply
+                { putInt(VIDEO_ID, id) })
         }
     }
 
@@ -136,10 +146,6 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onClick() {
-        navigateToActivity(VideoPlayerActivity::class.java, shouldFinish = false)
     }
 
     override fun onBackPressed() {

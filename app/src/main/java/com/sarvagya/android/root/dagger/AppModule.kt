@@ -5,6 +5,8 @@ import com.sarvagya.android.root.SarvagyaApplication
 import com.sarvagya.android.ui.home.feeds.data.http.FeedsService
 import com.sarvagya.android.ui.home.feeds.data.http.HttpFeedsService
 import com.sarvagya.android.ui.home.ktor.httpclient.KtorNetworkClient
+import com.sarvagya.android.ui.home.videos.data.http.HttpVideoService
+import com.sarvagya.android.ui.home.videos.data.http.VideoService
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -31,5 +33,10 @@ abstract class BindModule{
     @Binds
     @Singleton
     abstract fun createFeedsService(feedsService: HttpFeedsService) : FeedsService
+
+
+    @Binds
+    @Singleton
+    abstract fun createVideoService(videosService: HttpVideoService) : VideoService
 
 }
