@@ -1,55 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_feed_item_border"
+    android:padding="@dimen/dimens_8_dp">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/ivVideo"
         android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/video"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/videoTitleTV"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/bg_feed_item_border"
-        android:elevation="5dp"
-        android:padding="4dp">
+        android:layout_marginTop="@dimen/dimens_8_dp"
+        android:layout_marginEnd="@dimen/dimens_8_dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimens_14_sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/durationTV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivVideo"
+        tools:text="Title" />
 
-        <ImageView
-            android:id="@+id/ivVideo"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/video" />
+    <TextView
+        android:id="@+id/durationTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="viewEnd"
+        android:textSize="@dimen/dimen_11_sp"
+        app:layout_constraintBottom_toBottomOf="@+id/videoTitleTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/videoTitleTV"
+        tools:text="Duration" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ivVideo"
-            android:layout_marginTop="4dp">
 
-            <TextView
-                android:id="@+id/videoTitleTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textAlignment="viewStart"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                tools:text="title" />
-
-            <TextView
-                android:id="@+id/durationTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/videoTitleTV"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="4dp"
-                android:textAlignment="viewEnd"
-                android:textSize="11sp"
-                tools:text="duration" />
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
