@@ -41,87 +41,57 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/feedIV"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="@dimen/dimen_200_dp"
             android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/scrollViewParent"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/durationTV"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/dimens_4_dp"
+            android:textAlignment="viewEnd"
+            android:textSize="@dimen/dimen_11_sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/feedIV"
-            app:layout_constraintVertical_bias="0.0">
+            tools:text="duration" />
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/scrollView"
-                android:layout_width="0dp"
+        <TextView
+            android:id="@+id/feedTitleTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimens_12_dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_14_sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/durationTV"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/durationTV"
+            tools:text="title" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dimens_8_dp"
+            android:orientation="vertical"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/feedTitleTV"
+            app:layout_constraintStart_toStartOf="@+id/feedTitleTV"
+            app:layout_constraintTop_toBottomOf="@+id/feedTitleTV">
+
+            <TextView
+                android:id="@+id/feedDescTV"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-             >
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    >
-
-                    <TextView
-                        android:id="@+id/durationTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimens_4_dp"
-                        android:textAlignment="viewEnd"
-                        android:textSize="@dimen/dimen_11_sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="duration" />
-
-                    <TextView
-                        android:id="@+id/feedTitleTV"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimens_12_dp"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimens_14_sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="@+id/durationTV"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/durationTV"
-                        tools:text="title" />
-
-                    <TextView
-                        android:id="@+id/feedDescTV"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:ellipsize="end"
-                        android:textSize="@dimen/dimen_11_sp"
-                        app:layout_constraintEnd_toEndOf="@+id/feedTitleTV"
-                        app:layout_constraintStart_toStartOf="@+id/feedTitleTV"
-                        app:layout_constraintTop_toBottomOf="@+id/feedTitleTV"
-                        tools:text="description" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.core.widget.NestedScrollView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:ellipsize="end"
+                android:textSize="@dimen/dimen_11_sp"
+                tools:text="description" />
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

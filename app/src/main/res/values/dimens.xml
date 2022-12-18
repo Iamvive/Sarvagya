@@ -15,4 +15,5 @@
     <dimen name="dimen_11_sp">11sp</dimen>
     <dimen name="dimens_12_dp">12dp</dimen>
     <dimen name="dimen_566_dp">566dp</dimen>
+    <dimen name="dimen_200_dp">200dp</dimen>
 </resources>
