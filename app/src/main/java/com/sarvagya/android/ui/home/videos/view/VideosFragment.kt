@@ -63,5 +63,4 @@ class VideosFragment(private val listener: VideoAdapterOnClickListener) : Fragme
             adapter = videosAdapter
         }
     }
-
 }

@@ -33,8 +33,7 @@ import com.sarvagya.android.ui.home.videos.view.VideoPlayerFragment
 import com.sarvagya.android.ui.home.videos.view.VideosFragment
 import javax.inject.Inject
 
-class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener
-    {
+class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
 
     private lateinit var binding: ActivityHomeBinding
     private var counter = 0
@@ -99,8 +98,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
     }
 
-    inner class VideoAdapterOnClickListenerImpl :VideoAdapterOnClickListener{
-        override fun onClick(id:Int) {
+    inner class VideoAdapterOnClickListenerImpl : VideoAdapterOnClickListener {
+        override fun onClick(id: Int) {
             navigateToActivity(VideoPlayerActivity::class.java, shouldFinish = false,
                 bundleKey = VIDEO_DATA, bundle = Bundle().apply
                 { putInt(VIDEO_ID, id) })
@@ -159,5 +158,4 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             )
         }
     }
-
 }

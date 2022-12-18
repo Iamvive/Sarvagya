@@ -2,6 +2,8 @@ package com.sarvagya.android.ui.home.feeds
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProviders
 import com.sarvagya.android.R
 import com.sarvagya.android.util.StringProvider
@@ -54,7 +56,7 @@ class FeedDetailActivity : AppCompatActivity() {
             .observe(this) { feed ->
                 binding.apply {
                     feedTitleTV.text = feed.title
-                    feedDescTV.text = feed.desc
+                    feedDescTV.text = HtmlCompat.fromHtml(feed.desc, HtmlCompat.FROM_HTML_MODE_LEGACY);
                     durationTV.text = feed.duration
                     feedIV.loadImage(feed.thumbnail)
                 }

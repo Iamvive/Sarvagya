@@ -151,5 +151,4 @@ class VideoPlayerActivity : AppCompatActivity() {
         const val VIDEO_DATA = "video_data"
         const val URL = "https://sarvagya.blob.core.windows.net/videos/sample-video.mp4"
     }
-
 }
