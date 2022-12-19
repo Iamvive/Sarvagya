@@ -59,11 +59,17 @@ dependencies {
     implementation "io.ktor:ktor-client-core:$ktor_version"
     implementation "io.ktor:ktor-client-android:$ktor_version"
 
+    //retrofit client
+    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+
     //Serialization
     implementation "io.ktor:ktor-client-serialization:$ktor_version"
 
     //Interceptor
     implementation "io.ktor:ktor-client-logging:$ktor_version"
+    implementation "io.ktor:ktor-client-okhttp:$ktor_version"
+    implementation "io.ktor:ktor-client-logging-jvm:$ktor_version"
 
     //Framework for creating objects
     implementation "com.google.dagger:dagger:$dagger_version"

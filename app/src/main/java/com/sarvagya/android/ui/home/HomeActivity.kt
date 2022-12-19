@@ -31,6 +31,7 @@ import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity.Companion.VI
 import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity.Companion.VIDEO_ID
 import com.sarvagya.android.ui.home.videos.view.VideoPlayerFragment
 import com.sarvagya.android.ui.home.videos.view.VideosFragment
+import com.sarvagya.android.ui.music.MusicFragment
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
@@ -100,13 +101,16 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     inner class VideoAdapterOnClickListenerImpl : VideoAdapterOnClickListener {
         override fun onClick(id: Int) {
-            navigateToActivity(VideoPlayerActivity::class.java, shouldFinish = false,
-                bundleKey = VIDEO_DATA, bundle = Bundle().apply
-                { putInt(VIDEO_ID, id) })
+            navigateToActivity(VideoPlayerActivity::class.java,
+                shouldFinish = false,
+                bundleKey = VIDEO_DATA,
+                bundle = Bundle().apply
+                { putInt(VIDEO_ID, id) }
+            )
         }
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {    //bottom navigation listener
         when (item.itemId) {
             id.feeds -> {
                 binding.tbTitle.text = stringProvider(R.string.news)
@@ -117,12 +121,20 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 loadFragment(VIDEOS)
             }
             id.donation -> {
-                binding.tbTitle.text = stringProvider(R.string.donation)
-                loadFragment(DONATION)
+                this.showSnackbar(
+                    resId = R.string.coming_soon,
+                    view = binding.root,
+                )
+//                binding.tbTitle.text = stringProvider(R.string.donation)
+//                loadFragment(DONATION)
             }
             id.appointment -> {
-                binding.tbTitle.text = stringProvider(R.string.appointment)
-                loadFragment(APPOINTMENTS)
+                this.showSnackbar(
+                    resId = R.string.coming_soon,
+                    view = binding.root,
+                )
+//                binding.tbTitle.text = stringProvider(R.string.appointment)
+//                loadFragment(APPOINTMENTS)
             }
         }
         return true
@@ -141,6 +153,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         return when (item.itemId) {
             id.leftNavigate -> {
 //                 startActivity(Intent(this,))//TODO: Music screen render
+                binding.tbTitle.text = stringProvider(R.string.music)
+                   MusicFragment().attachWithReplace(this)
                 true
             }
             else -> super.onOptionsItemSelected(item)

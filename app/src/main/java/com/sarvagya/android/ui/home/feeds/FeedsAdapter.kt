@@ -46,7 +46,6 @@ class FeedsAdapter(private var feeds: List<FeedVM>) : Adapter<FeedsViewHolder>()
                 //Register Listener here
                 itemChannel.trySend(feeds[adapterPosition].id)
             }
-
         }
 
         fun bindData(feed: FeedVM) {
@@ -57,5 +56,6 @@ class FeedsAdapter(private var feeds: List<FeedVM>) : Adapter<FeedsViewHolder>()
                 newsIV.loadImage(feed.thumbnail)
             }
         }
+
     }
 }

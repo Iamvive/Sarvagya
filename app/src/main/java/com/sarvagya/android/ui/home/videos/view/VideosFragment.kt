@@ -59,7 +59,6 @@ class VideosFragment(private val listener: VideoAdapterOnClickListener) : Fragme
     private fun setUpVideosList() {
         videosBinding.videosRV.apply {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            addItemDecoration(MaterialDividerItemDecoration(this.context, RecyclerView.VERTICAL))
             adapter = videosAdapter
         }
     }

@@ -119,7 +119,7 @@ class VideoPlayerActivity : AppCompatActivity() {
                     resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
                 }
 
-                val mediaItem = MediaItem.fromUri(Uri.parse(URL))
+                val mediaItem = MediaItem.fromUri(Uri.parse(uri))
                 exoPlayer.setMediaItem(mediaItem)
 
                 exoPlayer.playWhenReady = playWhenReady
