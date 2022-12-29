@@ -1,11 +1,8 @@
 package com.sarvagya.android.ui.music
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog.show
 import android.net.Uri
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,19 +14,18 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
-import androidx.media3.common.MimeTypes
 import androidx.media3.common.Player
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import androidx.media3.ui.AspectRatioFrameLayout
-import androidx.media3.ui.PlayerControlView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sarvagya.android.R
+import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
+import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.sarvagya.android.databinding.FragmentMusicBinding
 import com.sarvagya.android.ui.home.HomeActivity
-import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity
-import com.sarvagya.android.ui.music.data.staticmodel.MusicPlaylist
+import com.sarvagya.android.ui.music.data.MusicDataSource.getMusicPlaylist
+import com.sarvagya.android.ui.music.data.MusicDataSource.uri
 import com.sarvagya.android.ui.music.view.AlbumAdapter
 import com.sarvagya.android.ui.music.view.MusicPresenter
 import com.sarvagya.android.ui.music.view.SongsAdapter
@@ -47,84 +43,43 @@ class MusicFragment(private val activity: HomeActivity) : Fragment(), MusicPrese
 
     private lateinit var binding: FragmentMusicBinding
 
-    val list = listOf(
-        getMusicList(),
-        getMusicList1(),
-        getMusicList2(),
-        getMusicList3(),
-        getMusicList(),
-        getMusicList1()
-    )
+    val list = getMusicPlaylist()
 
     private val albumAdapter by lazy { AlbumAdapter(list) }
     private val songAdapter by lazy { SongsAdapter(list) }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentMusicBinding.inflate(layoutInflater)
         setAlbumList()
         setSongList()
         hideSystemUi()
         if (Util.SDK_INT <= 23 || player == null) {
-            initializePlayer("https://sarvagya.blob.core.windows.net/audios/sample-audio.mp3")//
+            initializePlayer(uri)//
         }
         return binding.root
     }
 
-    private fun getMusicList() = MusicPlaylist(
-        playlistName = "Ganesh Ji",
-        playlistImage = "https://sarvagya.blob.core.windows.net/images/5ac6195f-3cb6-4367-9984-095387c01c23.png",
-        artistName = "Anu Mallik",
-        musicUrl = "https://sarvagya.blob.core.windows.net/audios/sample-audio.mp3",
-        musicName = "Ganesh Ji Ki Arati",
-    )//dummy data remove later
-
-    private fun getMusicList1() = MusicPlaylist(
-        playlistName = "Hanuman Ji",
-        playlistImage = "https://sarvagya.blob.core.windows.net/images/maxresdefault.jpg",
-        artistName = "Anu Mallik",
-        musicUrl = "https://sarvagya.blob.core.windows.net/audios/sample-audio.mp3",
-        musicName = "Ganesh Ji Ki Arati",
-    )//dummy data remove later
-
-    private fun getMusicList2() = MusicPlaylist(
-        playlistName = "Sri Krishna Ji",
-        playlistImage = "https://sarvagya.blob.core.windows.net/images/thumb.jpg",
-        artistName = "Anu Mallik",
-        musicUrl = "https://sarvagya.blob.core.windows.net/audios/sample-audio.mp3",
-        musicName = "Ganesh Ji Ki Arati",
-    )//dummy data remove later
-
-    private fun getMusicList3() = MusicPlaylist(
-        playlistName = "Sihiv Ji",
-        playlistImage = "https://sarvagya.blob.core.windows.net/images/maxresdefault1.jpg",
-        artistName = "Anu Mallik",
-        musicUrl = "https://sarvagya.blob.core.windows.net/audios/sample-audio.mp3",
-        musicName = "Ganesh Ji Ki Arati",
-    )//dummy data remove later
-
     private fun setAlbumList() {
         binding.albumLyt.albumList.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), HORIZONTAL, false)
             adapter = albumAdapter
         }
     }
 
     private fun setSongList() {
         binding.songsList.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
             adapter = songAdapter
         }
     }
 
     private fun initializePlayer(uri: String) {
-        val trackSelector = DefaultTrackSelector(requireContext().applicationContext).apply {
-            setParameters(buildUponParameters().setMaxVideoSizeSd())
-        }
+        val trackSelector = DefaultTrackSelector(requireContext())
+            .apply { setParameters(buildUponParameters().setMaxVideoSizeSd()) }
 
         player = ExoPlayer.Builder(activity)
             .setTrackSelector(trackSelector)
@@ -149,13 +104,6 @@ class MusicFragment(private val activity: HomeActivity) : Fragment(), MusicPrese
                 exoPlayer.addListener(playbackStateListener)
                 exoPlayer.prepare()
             }
-    }
-
-    override fun onStart() {
-        super.onStart()
-//        if (Util.SDK_INT > 23) {
-//            initializePlayer("https://sarvagya.blob.core.windows.net/audios/sample-audio.mp3")
-//        }
     }
 
     override fun onResume() {
@@ -201,9 +149,6 @@ class MusicFragment(private val activity: HomeActivity) : Fragment(), MusicPrese
         }
     }
 
-    private fun playListener() = object : ExoPlayer.AudioOffloadListener {
-
-    }
     private fun playbackStateListener() = object : Player.Listener {
         override fun onPlaybackStateChanged(playbackState: Int) {
             val stateString: String = when (playbackState) {
