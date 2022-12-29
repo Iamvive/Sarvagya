@@ -31,7 +31,6 @@ class FeedsViewModel(
     fun handlePresenter(presenter: FeedsPresenter, listener: FeedsListener) {
         viewModelScope.launch {
             presenter.didTapItem()
-                .distinctUntilChanged()
                 .collect {
                     listener.onFeedTapped(it)
                 }

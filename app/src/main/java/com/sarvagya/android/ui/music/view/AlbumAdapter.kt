@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sarvagya.android.databinding.ItemAlbumBinding
 import com.sarvagya.android.extension.loadImage
-import com.sarvagya.android.extension.loadRoundCornerImage
 import com.sarvagya.android.ui.music.data.staticmodel.MusicPlaylist
 import com.sarvagya.android.ui.music.view.AlbumAdapter.*
 
@@ -30,9 +29,10 @@ class AlbumAdapter(
     inner class AlbumVH(private val viewBinding: ItemAlbumBinding) : RecyclerView.ViewHolder(viewBinding.root) {
         fun bindData(item: MusicPlaylist) {
             viewBinding.apply {
-                albumIV.loadRoundCornerImage(item.playlistImage,8.0f)
+                albumIV.loadImage(item.playlistImage)
                 albumTV.text = item.playlistName
             }
         }
     }
+
 }

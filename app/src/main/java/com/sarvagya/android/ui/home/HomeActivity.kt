@@ -5,15 +5,17 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.navigation.NavigationView
 import com.sarvagya.android.R
 import com.sarvagya.android.R.id
-import com.sarvagya.android.util.StringProvider
 import com.sarvagya.android.databinding.ActivityHomeBinding
 import com.sarvagya.android.extension.attachWithReplace
 import com.sarvagya.android.extension.navigateToActivity
 import com.sarvagya.android.extension.showSnackbar
 import com.sarvagya.android.root.SarvagyaApplication
+import com.sarvagya.android.ui.festival.FestivalFragment
 import com.sarvagya.android.ui.home.appointment.AppointmentFragment
 import com.sarvagya.android.ui.home.donation.DonationFragment
 import com.sarvagya.android.ui.home.feeds.FeedDetailActivity
@@ -21,6 +23,8 @@ import com.sarvagya.android.ui.home.feeds.FeedDetailActivity.Companion.FEED_DATA
 import com.sarvagya.android.ui.home.feeds.FeedDetailActivity.Companion.FEED_ID
 import com.sarvagya.android.ui.home.feeds.FeedsListener
 import com.sarvagya.android.ui.home.feeds.view.FeedsFragment
+import com.sarvagya.android.ui.home.models.DrawerMenus
+import com.sarvagya.android.ui.home.models.DrawerMenus.FESTIVAL
 import com.sarvagya.android.ui.home.models.HeaderVM
 import com.sarvagya.android.ui.home.models.HomeVM
 import com.sarvagya.android.ui.home.models.Menus
@@ -32,12 +36,15 @@ import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity.Companion.VI
 import com.sarvagya.android.ui.home.videos.view.VideoPlayerFragment
 import com.sarvagya.android.ui.home.videos.view.VideosFragment
 import com.sarvagya.android.ui.music.MusicFragment
+import com.sarvagya.android.util.StringProvider
 import javax.inject.Inject
 
-class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
+class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
+    NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityHomeBinding
     private var counter = 0
+    private val drawerListener = DrawerListener()
 
     @Inject
     lateinit var stringProvider: StringProvider
@@ -52,6 +59,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         //bottom navigation
         binding.homeNavigation.setOnItemSelectedListener(this)
+
+        binding.navView.setNavigationItemSelectedListener(drawerListener)
 
         //start navigation drawer
         binding.toolbar.setNavigationOnClickListener {
@@ -90,6 +99,12 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
     }
 
+    private fun loadDrawerFragment(selectedDrawerItem: DrawerMenus) {
+        when (selectedDrawerItem) {
+            FESTIVAL -> FestivalFragment()
+        }
+    }
+
     inner class FeedsListenerImpl : FeedsListener {
         override fun onFeedTapped(id: String) {
             navigateToActivity(
@@ -125,17 +140,14 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     resId = R.string.coming_soon,
                     view = binding.root,
                 )
-//                binding.tbTitle.text = stringProvider(R.string.donation)
-//                loadFragment(DONATION)
             }
             id.appointment -> {
                 this.showSnackbar(
                     resId = R.string.coming_soon,
                     view = binding.root,
                 )
-//                binding.tbTitle.text = stringProvider(R.string.appointment)
-//                loadFragment(APPOINTMENTS)
             }
+
         }
         return true
     }
@@ -152,9 +164,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             id.leftNavigate -> {
-//                 startActivity(Intent(this,))//TODO: Music screen render
                 binding.tbTitle.text = stringProvider(R.string.music)
-                   MusicFragment().attachWithReplace(this)
+                   MusicFragment(this).attachWithReplace(this)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -170,6 +181,17 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 resId = R.string.exit_msg,
                 view = binding.root,
             )
+        }
+    }
+
+    inner class DrawerListener : NavigationView.OnNavigationItemSelectedListener{
+        override fun onNavigationItemSelected(item: MenuItem): Boolean {
+            when (item.itemId) {
+                id.festival -> {
+                    loadDrawerFragment(FESTIVAL)
+                }
+            }
+            return true
         }
     }
 }
