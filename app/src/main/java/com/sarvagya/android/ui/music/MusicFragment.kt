@@ -1,66 +1,55 @@
 package com.sarvagya.android.ui.music
 
-import android.annotation.SuppressLint
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
-import androidx.media3.common.MediaItem
-import androidx.media3.common.MediaMetadata
-import androidx.media3.common.Player
-import androidx.media3.common.util.Util
-import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
-import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
+import coil.api.load
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.sarvagya.android.R
 import com.sarvagya.android.databinding.FragmentMusicBinding
+import com.sarvagya.android.extension.loadImage
+import com.sarvagya.android.extension.showToast
 import com.sarvagya.android.ui.home.HomeActivity
-import com.sarvagya.android.ui.music.data.MusicDataSource.getMusicPlaylist
-import com.sarvagya.android.ui.music.data.MusicDataSource.uri
+import com.sarvagya.android.ui.music.data.MusicDataSource
+import com.sarvagya.android.ui.music.data.staticmodel.MusicPlaylist
+import com.sarvagya.android.ui.music.data.staticmodel.toMediaItem
 import com.sarvagya.android.ui.music.view.AlbumAdapter
-import com.sarvagya.android.ui.music.view.MusicPresenter
 import com.sarvagya.android.ui.music.view.SongsAdapter
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
+class MusicFragment(private val activity: HomeActivity) : Fragment() {
 
-class MusicFragment(private val activity: HomeActivity) : Fragment(), MusicPresenter {
-
-    private var playWhenReady = true
-    private var currentItem = 0
-    private var playbackPosition = 0L
-    private var player: ExoPlayer? = null
-    private val playbackStateListener: Player.Listener = playbackStateListener()
+    private val musicList = MusicDataSource.getMusicPlaylist()
+    private val albumAdapter by lazy { AlbumAdapter(musicList) }
+    private val songsAdapter by lazy { SongsAdapter(musicList) }
+    private var currentPosition = 0
 
     private lateinit var binding: FragmentMusicBinding
-
-    val list = getMusicPlaylist()
-
-    private val albumAdapter by lazy { AlbumAdapter(list) }
-    private val songAdapter by lazy { SongsAdapter(list) }
+    private lateinit var player: ExoPlayer
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding = FragmentMusicBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        activity.hideNavigation()
+        renderView()
+    }
+
+    private fun renderView() {
         setAlbumList()
         setSongList()
-        hideSystemUi()
-        if (Util.SDK_INT <= 23 || player == null) {
-            initializePlayer(uri)//
-        }
-        return binding.root
+        initMusicPlayerComponent()
     }
 
     private fun setAlbumList() {
@@ -73,128 +62,106 @@ class MusicFragment(private val activity: HomeActivity) : Fragment(), MusicPrese
     private fun setSongList() {
         binding.songsList.apply {
             layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
-            adapter = songAdapter
+            adapter = songsAdapter
         }
     }
 
-    private fun initializePlayer(uri: String) {
-        val trackSelector = DefaultTrackSelector(requireContext())
-            .apply { setParameters(buildUponParameters().setMaxVideoSizeSd()) }
+    private fun initMusicPlayerComponent() {
+        initMusicPlayer()
+        registerMusicPlayerListener()
+        setMusicUiData(currentPosition)
+    }
 
-        player = ExoPlayer.Builder(activity)
-            .setTrackSelector(trackSelector)
-            .build()
-            .also { exoPlayer ->
-                binding.musicPlayer.apply {
-                    player = exoPlayer
-                    resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
-                }
-                val mediaMetaData = MediaMetadata.Builder()
-                    .setAlbumTitle("Album name")
-                    .build()
-
-                val mediaItem =
-                    MediaItem.Builder().setMediaMetadata(mediaMetaData)
-                        .setUri(Uri.parse(uri))
-                        .build()
-
-                exoPlayer.setMediaItem(mediaItem)
-                exoPlayer.playWhenReady = playWhenReady
-                exoPlayer.seekTo(currentItem, playbackPosition)
-                exoPlayer.addListener(playbackStateListener)
-                exoPlayer.prepare()
+    private fun registerMusicPlayerListener() {
+        binding.musicPlayer.apply {
+            btnPlayPauseIV.setOnClickListener {
+                onPlayPauseTapped()
             }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        hideSystemUi()
-        if (Util.SDK_INT <= 23 || player == null) {
-            initializePlayer("https://sarvagya.blob.core.windows.net/audios/sample-audio.mp3")
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (Util.SDK_INT <= 23) {
-            releasePlayer()
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (Util.SDK_INT > 23) {
-            releasePlayer()
-        }
-    }
-
-    private fun releasePlayer() {
-        player?.let { exoPlayer ->
-            playbackPosition = exoPlayer.currentPosition
-            currentItem = exoPlayer.currentMediaItemIndex
-            playWhenReady = exoPlayer.playWhenReady
-            exoPlayer.removeListener(playbackStateListener)
-            exoPlayer.release()
-        }
-        player = null
-    }
-
-    @SuppressLint("InlinedApi")
-    private fun hideSystemUi() {
-        WindowCompat.setDecorFitsSystemWindows(activity.window, false)
-        WindowInsetsControllerCompat(activity.window, binding.musicPlayer).let { controller ->
-            controller.hide(WindowInsetsCompat.Type.systemBars())
-            controller.systemBarsBehavior =
-                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        }
-    }
-
-    private fun playbackStateListener() = object : Player.Listener {
-        override fun onPlaybackStateChanged(playbackState: Int) {
-            val stateString: String = when (playbackState) {
-                ExoPlayer.STATE_IDLE -> "ExoPlayer.STATE_IDLE      -"
-                ExoPlayer.STATE_BUFFERING -> "ExoPlayer.STATE_BUFFERING -"
-                ExoPlayer.STATE_READY -> "ExoPlayer.STATE_READY     -"
-                ExoPlayer.STATE_ENDED -> "ExoPlayer.STATE_ENDED     -"
-                ExoPlayer.COMMAND_PLAY_PAUSE -> {
-                    Toast.makeText(activity, "Play/Pause", Toast.LENGTH_SHORT).show()
-                    "ExoPlayer.COMMAND_PLAY_PAUSE"
-                }
-                else -> "UNKNOWN_STATE             -"
+            btnNextIV.setOnClickListener {
+                onNextTapped()
             }
-            Log.d("VideoPlayerActivity", "changed state to $playbackState")
         }
     }
 
-    override fun didTapAlbum() {
+    private fun setMusicUiData(pos: Int) {
+        if (pos > musicList.lastIndex) return
+
+        val item = musicList[pos]
+        binding.musicPlayer.apply {
+            musicIV.loadImage(item.playlistImage)
+            musicTitleTV.text = item.musicName
+            singerNameTV.text = item.artistName
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initMusicPlayer()
+    }
+
+    private fun initMusicPlayer() {
+        player = buildPlayer()
+        player.apply {
+            setMediaItems(getMediaItems(musicList))
+            prepare()
+        }
+    }
+
+    private fun getMediaItems(musicList: List<MusicPlaylist>) =
+        musicList.map { it.toMediaItem() }
+
+    private fun buildPlayer() = ExoPlayer.Builder(requireContext()).build()
+
+    private fun getMediaItem(pos: Int): MediaItem {
+        val item = musicList[pos]
+        return MediaItem.fromUri(item.musicUrl)
+    }
+
+    private fun onPlayPauseTapped() {
+        if (player.isPlaying) {
+            updatePauseState()
+        } else {
+            updatePlayState()
+        }
+    }
+
+    private fun updatePauseState() {
+        player.pause()
+        binding.musicPlayer.apply {
+            btnPlayPauseIV.load(R.drawable.ic_play_arrow_24)
+        }
+    }
+
+    private fun updatePlayState() {
+        player.play()
+        binding.musicPlayer.apply {
+            btnPlayPauseIV.load(R.drawable.ic_pause_24)
+        }
+    }
+
+    private fun onNextTapped() {
+        if (currentPosition > musicList.lastIndex) {
+            requireActivity().showToast("This is last song")
+            return
+        }
+
+        updatePlayer(currentPosition++)
+        setMusicUiData(currentPosition++)
+    }
+
+    private fun updatePlayer(currentPosition: Int) {
+        player.apply {
+            setMediaItem(getMediaItem(currentPosition))
+            prepare()
+            updatePlayState()
+        }
 
     }
 
-    override fun didTapSong() {
-
+    override fun onDestroy() {
+        super.onDestroy()
+        player.release()
     }
-
-    override fun didTapVideoMenu() {
-
-    }
-
-    override fun didTapFavorite(): Flow<Boolean> = flow {
-
-    }
-
-    override fun didTapPlay() {
-    }
-
-    override fun didTapPrev() {
-
-    }
-
-    override fun didTapNext() {
-
-    }
-
-    override fun didTapBack() {
-
-    }
-
 }
+
+

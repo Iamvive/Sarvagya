@@ -1,71 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_50_dp"
-    >
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_50_dp"
-    android:layout_marginVertical="@dimen/dimens_16_dp"
-    android:layout_marginBottom="@dimen/dimen_8_dp">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dimens_4_dp">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
         android:layout_width="@dimen/dimens_60_dp"
         android:layout_height="@dimen/dimens_60_dp"
-        app:cardCornerRadius="@dimen/dimens_20_dp"
-        android:paddingEnd="@dimen/dimens_8_dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        >
+        android:layout_centerVertical="true"
+        app:cardCornerRadius="@dimen/dimens_20_dp">
 
-    <ImageView
-        android:id="@+id/songIV"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        />
+        <ImageView
+            android:id="@+id/songIV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
     </com.google.android.material.card.MaterialCardView>
-
 
     <TextView
         android:id="@+id/songName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Name"
+        android:layout_marginHorizontal="@dimen/dimens_4_dp"
+        android:layout_marginTop="@dimen/dimens_4_dp"
+        android:layout_toStartOf="@+id/favIV"
+        android:layout_toEndOf="@+id/cardView"
         android:textColor="@color/black"
         android:textSize="@dimen/dimens_16_sp"
         android:textStyle="bold"
-        android:layout_marginTop="@dimen/dimens_2_dp"
-        android:layout_toEndOf="@+id/cardView"
-         />
+        tools:text="Name" />
 
     <TextView
         android:id="@+id/singerName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/songName"
-        android:layout_marginTop="@dimen/dimens_4_dp"
-        tools:text="Singer Name"
+        android:layout_margin="@dimen/dimens_4_dp"
+        android:layout_toStartOf="@+id/favIV"
+        android:layout_toEndOf="@+id/cardView"
         android:textColor="@color/black"
         android:textSize="@dimen/dimens_14_sp"
-        android:layout_toEndOf="@+id/cardView"
-        />
+        tools:text="Singer Name" />
 
     <ImageButton
         android:id="@+id/favIV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dimens_8_dp"
-        android:src="@drawable/ic_baseline_favorite_24"
-        android:background="@color/white"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        />
+        android:layout_marginHorizontal="@dimen/dimens_8_dp"
+        android:background="@color/white"
+        android:src="@drawable/ic_baseline_favorite_24" />
 
 </RelativeLayout>
-</LinearLayout>

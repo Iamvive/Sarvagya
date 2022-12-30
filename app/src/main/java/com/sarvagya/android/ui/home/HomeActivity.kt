@@ -3,6 +3,7 @@ package com.sarvagya.android.ui.home
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -69,6 +70,10 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         //load feed fragment
         loadFragment(FEEDS)
+    }
+
+    fun hideNavigation() {
+        binding.homeNavigation.visibility = View.GONE
     }
 
     override fun onResume() {

@@ -80,6 +80,9 @@ dependencies {
     implementation "androidx.media3:media3-ui:$mediaVersion"
     implementation "androidx.media3:media3-exoplayer-dash:$mediaVersion"
 
+    //EXoplayer
+    implementation "com.google.android.exoplayer:exoplayer:2.16.0"
+
 
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'com.github.bumptech.glide:glide:4.9.0'

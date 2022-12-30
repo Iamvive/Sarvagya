@@ -4,6 +4,7 @@ import com.sarvagya.android.ui.music.data.staticmodel.MusicPlaylist
 
 object MusicDataSource {
     val uri = "https://sarvagya.blob.core.windows.net/audios/sample-audio.mp3"
+    val imagePath = "https://sarvagya.blob.core.windows.net/images/5ac6195f-3cb6-4367-9984-095387c01c23.png"
     fun getMusicPlaylist() = listOf(
         getMusicList(),
         getMusicList1(),

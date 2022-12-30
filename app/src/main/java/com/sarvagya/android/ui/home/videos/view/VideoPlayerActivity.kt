@@ -144,6 +144,16 @@ class VideoPlayerActivity : AppCompatActivity() {
             }
             Log.d("VideoPlayerActivity", "changed state to $stateString")
         }
+
+        override fun onIsPlayingChanged(isPlaying: Boolean) {
+            super.onIsPlayingChanged(isPlaying)
+            Log.d("VideoPlayerActivity", "isPlaying $isPlaying")
+        }
+
+        override fun onEvents(player: Player, events: Player.Events) {
+            super.onEvents(player, events)
+            Log.d("VideoPlayerActivity", "onEvents: $events ")
+        }
     }
 
     companion object {
