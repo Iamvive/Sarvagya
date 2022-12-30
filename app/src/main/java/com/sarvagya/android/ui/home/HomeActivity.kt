@@ -72,10 +72,6 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         loadFragment(FEEDS)
     }
 
-    fun hideNavigation() {
-        binding.homeNavigation.visibility = View.GONE
-    }
-
     override fun onResume() {
         super.onResume()
         binding.toolbar.title = ""
@@ -96,8 +92,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     private fun loadFragment(selectedItem: Menus) {
         when (selectedItem) {
-            FEEDS -> FeedsFragment(FeedsListenerImpl()).attachWithReplace(this)
-            VIDEOS -> VideosFragment(this,VideoAdapterOnClickListenerImpl()).attachWithReplace(this)
+            FEEDS -> FeedsFragment(this, FeedsListenerImpl()).attachWithReplace(this)
+            VIDEOS -> VideosFragment(this, VideoAdapterOnClickListenerImpl()).attachWithReplace(this)
             DONATION -> DonationFragment().attachWithReplace(this)
             APPOINTMENTS -> AppointmentFragment().attachWithReplace(this)
         }
@@ -200,7 +196,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
                     //Remove Music Icon
                     val musicButton = binding.toolbar.menu.findItem(R.id.leftNavigate)
-                    musicButton.isVisible = false
+                    musicButton.setIcon(R.drawable.blank)
 
                     //load festival fragment
                     loadDrawerFragment(FESTIVAL)

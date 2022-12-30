@@ -47,7 +47,6 @@ class MusicFragment(private val activity: HomeActivity) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity.hideNavigation()
         renderView()
     }
 
@@ -168,5 +167,3 @@ class MusicFragment(private val activity: HomeActivity) : Fragment() {
         player.release()
     }
 }
-
-

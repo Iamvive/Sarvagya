@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sarvagya.android.R
 import com.sarvagya.android.databinding.FragmentFeedsBinding
 import com.sarvagya.android.root.SarvagyaApplication
+import com.sarvagya.android.ui.home.HomeActivity
 import com.sarvagya.android.ui.home.feeds.FeedsAdapter
 import com.sarvagya.android.ui.home.feeds.FeedsListener
 import com.sarvagya.android.ui.home.feeds.FeedsViewModel
@@ -16,7 +18,7 @@ import com.sarvagya.android.ui.home.feeds.FeedsViewModelFactory
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class FeedsFragment(private val listener: FeedsListener) :
+class FeedsFragment(private val activity: HomeActivity,private val listener: FeedsListener) :
     Fragment(), FeedsPresenter {
 
     private lateinit var feedsBinding: FragmentFeedsBinding
@@ -42,6 +44,10 @@ class FeedsFragment(private val listener: FeedsListener) :
         )[FeedsViewModel::class.java]
         feedsViewModel.fetchFeeds()
         feedsViewModel.handlePresenter(this, listener)
+
+        //toolbar icon change
+        val musicButton = activity.binding.toolbar.menu.findItem(R.id.leftNavigate)
+        musicButton.setIcon(R.drawable.ic_music)
         return feedsBinding.root
     }
 
