@@ -62,7 +62,6 @@ class MusicFragment(private val activity: HomeActivity) : Fragment(), MusicPrese
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentMusicBinding.inflate(layoutInflater)
         setAlbumList()
         setSongList()
@@ -70,6 +69,10 @@ class MusicFragment(private val activity: HomeActivity) : Fragment(), MusicPrese
         if (Util.SDK_INT <= 23 || player == null) {
             initializePlayer("https://sarvagya.blob.core.windows.net/audios/sample-audio.mp3")//
         }
+        // toolbar icon change
+        val musicButton = activity.binding.toolbar.menu.findItem(R.id.leftNavigate)
+        musicButton.setIcon(R.drawable.ic_videocam)
+
         return binding.root
     }
 

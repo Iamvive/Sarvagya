@@ -11,8 +11,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import com.sarvagya.android.R
 import com.sarvagya.android.databinding.FragmentVideosBinding
 import com.sarvagya.android.root.SarvagyaApplication
+import com.sarvagya.android.ui.home.HomeActivity
 import com.sarvagya.android.ui.home.feeds.data.models.FeedDetail
 import com.sarvagya.android.ui.home.videos.VideoAdapterOnClickListener
 import com.sarvagya.android.ui.home.videos.VideosViewModel
@@ -22,7 +24,7 @@ import com.sarvagya.android.ui.home.videos.data.models.Video
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class VideosFragment(private val listener: VideoAdapterOnClickListener) : Fragment() {
+class VideosFragment(private val activity: HomeActivity,private val listener: VideoAdapterOnClickListener) : Fragment() {
 
     private lateinit var videosBinding: FragmentVideosBinding
     private val videosAdapter by lazy { VideosAdapter(listener) }
@@ -41,6 +43,11 @@ class VideosFragment(private val listener: VideoAdapterOnClickListener) : Fragme
         videosBinding = FragmentVideosBinding.inflate(layoutInflater)
         setUpVideosList()
         viewModel = ViewModelProviders.of(requireActivity(), videosViewModelFactory)[VideosViewModel::class.java]
+
+        // toolbar icon change
+        val musicButton = activity.binding.toolbar.menu.findItem(R.id.leftNavigate)
+        musicButton.setIcon(R.drawable.ic_music)
+
         return videosBinding.root
     }
 

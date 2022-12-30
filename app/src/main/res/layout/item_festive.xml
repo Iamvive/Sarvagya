@@ -9,15 +9,16 @@
 
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_50_dp"
-    android:layout_margin="@dimen/dimens_16_dp"
+    android:layout_height="@dimen/dimen_60_dp"
+    android:layout_marginHorizontal="@dimen/dimens_16_dp"
+    android:layout_marginTop="@dimen/dimens_10_dp"
     android:background="@drawable/bg_item_grey_border"
     >
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
-        android:layout_width="@dimen/dimens_40_dp"
-        android:layout_height="@dimen/dimens_60_dp"
+        android:layout_width="@dimen/dimens_50_dp"
+        android:layout_height="@dimen/dimens_50_dp"
         app:cardCornerRadius="@dimen/dimens_4_dp"
         android:layout_margin="@dimen/dimens_8_dp"
         android:layout_alignParentBottom="true"
@@ -38,7 +39,7 @@
         android:id="@+id/festiveName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="दीपावली"
+        tools:text="Festival Name"
         android:textColor="@color/black"
         android:textSize="@dimen/dimens_16_sp"
         android:textStyle="bold"
@@ -52,22 +53,25 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/festiveName"
         android:layout_marginTop="@dimen/dimens_4_dp"
-        tools:text="रोशनी और खुशियों का त्योहार"
+        tools:text="Festival Description"
         android:textColor="@color/black"
         android:textSize="@dimen/dimens_14_sp"
         android:layout_toEndOf="@+id/cardView"
         />
 
     <TextView
-        android:id="@+id/favIV"
+        android:id="@+id/dateAndTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/festiveName"
         android:textSize="12sp"
         tools:text="सोमवार, 24 अक्टूबर"
+        android:textColor="@color/textBlack"
         android:textAlignment="viewEnd"
-        android:layout_marginTop="@dimen/dimens_2_dp"
+        android:layout_marginTop="@dimen/dimens_10_dp"
+        android:layout_marginBottom="@dimen/dimens_16_dp"
+        android:layout_marginEnd="@dimen/dimens_12_dp"
         />
 
 </RelativeLayout>
