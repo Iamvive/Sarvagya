@@ -12,9 +12,15 @@ enum class Menus{
     VIDEOS,
     DONATION,
     APPOINTMENTS,
-    VIDEOPLAYER,
+
 }
 
 enum class DrawerMenus{
+    D_FEEDS,
+    D_VIDEOS,
+    D_DONATION,
+    D_APPOINTMENTS,
     FESTIVAL,
+    MUSIC,
+
 }

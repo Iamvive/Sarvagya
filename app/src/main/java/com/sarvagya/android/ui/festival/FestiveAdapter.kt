@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sarvagya.android.databinding.ItemFestiveBinding
+import com.sarvagya.android.extension.loadImage
+import com.sarvagya.android.ui.home.HomeActivity
 
 class FestiveAdapter() : RecyclerView.Adapter<FestiveAdapter.FestiveVM>() {
 
@@ -13,21 +15,22 @@ class FestiveAdapter() : RecyclerView.Adapter<FestiveAdapter.FestiveVM>() {
     }
 
     override fun onBindViewHolder(holder: FestiveVM, position: Int) {
-//        val item = albums[position]
-//        holder.bindData(item)
+        holder.bindData()
     }
 
     override fun getItemCount(): Int {
-        return 7
+        return 17
     }
 
     inner class FestiveVM(private val viewBinding: ItemFestiveBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
-//        fun bindData(item: MusicPlaylist) {
-//            viewBinding.apply {
-//                albumIV.loadImage(item.playlistImage)
-//                albumTV.text = item.playlistName
-//            }
-//        }
+        fun bindData() {
+            viewBinding.apply {
+                viewBinding.festiveName.text = "दीपावली"
+                viewBinding.festiveDesc.text = "रोशनी और खुशियों का त्योहार"
+                viewBinding.dateAndTime.text = "सोमवार, 24 अक्टूबर"
+                viewBinding.festiveIV.loadImage("https://sarvagya.blob.core.windows.net/images/gettyimages-641015871-sixteen_nine.webp")
+            }
+        }
     }
 }

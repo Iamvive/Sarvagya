@@ -37,6 +37,11 @@ class MusicFragment(private val activity: HomeActivity) : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMusicBinding.inflate(layoutInflater)
+
+        // toolbar icon change
+        val musicButton = activity.binding.toolbar.menu.findItem(R.id.leftNavigate)
+        musicButton.setIcon(R.drawable.ic_videocam)
+
         return binding.root
     }
 

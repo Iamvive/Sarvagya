@@ -28,4 +28,6 @@
     <dimen name="dimens_1_dp">1dp</dimen>
     <dimen name="dimens_75_dp">75dp</dimen>
     <dimen name="dimens_5_dp">5dp</dimen>
+    <dimen name="dimen_60_dp">60dp</dimen>
+    <dimen name="dimens_50_dp">50dp</dimen>
 </resources>
