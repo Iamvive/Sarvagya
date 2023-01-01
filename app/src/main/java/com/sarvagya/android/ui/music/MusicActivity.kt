@@ -1,10 +1,9 @@
 package com.sarvagya.android.ui.music
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
@@ -16,72 +15,67 @@ import com.sarvagya.android.extension.loadImage
 import com.sarvagya.android.extension.showToast
 import com.sarvagya.android.musicplayer.MusicPlayer
 import com.sarvagya.android.root.SarvagyaApplication
-import com.sarvagya.android.ui.home.HomeActivity
 import com.sarvagya.android.ui.music.data.MusicDataSource
 import com.sarvagya.android.ui.music.view.AlbumAdapter
 import com.sarvagya.android.ui.music.view.SongsAdapter
+import com.sarvagya.android.util.StringProvider
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MusicFragment(private val activity: HomeActivity) : Fragment() {
+class MusicActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var player: MusicPlayer
+    @Inject
+    lateinit var stringProvider: StringProvider
     private val musicList = MusicDataSource.getMusicPlaylist()
     private val albumAdapter by lazy { AlbumAdapter(musicList) }
     private val songsAdapter by lazy { SongsAdapter(musicList) }
     private var currentPosition = 0
 
-    private lateinit var binding: ActivityMusicBinding
-
-    @Inject
-    lateinit var player: MusicPlayer
+    private val binding by lazy {
+        ActivityMusicBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (requireContext().applicationContext as SarvagyaApplication).appComponent.inject(this)
+        (application as SarvagyaApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-    }
+        setContentView(binding.root)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = ActivityMusicBinding.inflate(layoutInflater)
-
-        // toolbar icon change
-        val musicButton = activity.binding.toolbar.menu.findItem(R.id.leftNavigate)
-        musicButton.setIcon(R.drawable.ic_videocam)
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        renderView()
-    }
-
-    private fun renderView() {
         setAlbumList()
         setSongList()
-        initMusicPlayerComponent()
+        registerMusicPlayerListener()
+        setMusicUiData(currentPosition)
+        setSupportActionBar(binding.toolbar)
+
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_music, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.item_video) {
+            true
+        } else super.onOptionsItemSelected(item)
     }
 
     private fun setAlbumList() {
         binding.albumLyt.albumList.apply {
-            layoutManager = LinearLayoutManager(requireContext(), HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(this@MusicActivity, HORIZONTAL, false)
             adapter = albumAdapter
         }
     }
 
     private fun setSongList() {
         binding.songsList.apply {
-            layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
+            layoutManager = LinearLayoutManager(this@MusicActivity, VERTICAL, false)
             adapter = songsAdapter
         }
-    }
-
-    private fun initMusicPlayerComponent() {
-        initMusicPlayer()
-        registerMusicPlayerListener()
-        setMusicUiData(currentPosition)
     }
 
     private fun registerMusicPlayerListener() {
@@ -92,23 +86,6 @@ class MusicFragment(private val activity: HomeActivity) : Fragment() {
             btnNextIV.setOnClickListener {
                 onNextTapped()
             }
-        }
-    }
-
-    private fun setMusicUiData(pos: Int) {
-        if (pos > musicList.lastIndex) return
-
-        val item = musicList[pos]
-        binding.musicPlayer.apply {
-            musicIV.loadImage(item.playlistImage)
-            musicTitleTV.text = item.musicName
-            singerNameTV.text = item.artistName
-        }
-    }
-
-    private fun initMusicPlayer() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            player.init(musicList.first().musicUrl)
         }
     }
 
@@ -136,7 +113,7 @@ class MusicFragment(private val activity: HomeActivity) : Fragment() {
 
     private fun onNextTapped() {
         if (currentPosition > musicList.lastIndex) {
-            requireActivity().showToast("This is last song")
+            this.showToast(stringProvider.invoke(R.string.msg_last_song))
             return
         }
         updatePlayer(currentPosition++)
@@ -148,8 +125,43 @@ class MusicFragment(private val activity: HomeActivity) : Fragment() {
         updatePlayState()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    private fun setMusicUiData(pos: Int) {
+        if (pos > musicList.lastIndex) return
+
+        val item = musicList[pos]
+        binding.musicPlayer.apply {
+            musicIV.loadImage(item.playlistImage)
+            musicTitleTV.text = item.musicName
+            singerNameTV.text = item.artistName
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initMusicPlayer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!player.isPlaying()) {
+            updatePlayState()
+        }
+    }
+
+
+    private fun initMusicPlayer() {
+        lifecycleScope.launch {
+            player.init(musicList.first().musicUrl)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        player.pause()
+    }
+
+    override fun onStop() {
+        super.onStop()
         player.release()
     }
 }

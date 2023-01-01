@@ -3,10 +3,8 @@ package com.sarvagya.android.ui.home
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.navigation.NavigationView
 import com.sarvagya.android.R
@@ -34,8 +32,8 @@ import com.sarvagya.android.ui.home.videos.VideoAdapterOnClickListener
 import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity
 import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity.Companion.VIDEO_DATA
 import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity.Companion.VIDEO_ID
-import com.sarvagya.android.ui.home.videos.view.VideoPlayerFragment
 import com.sarvagya.android.ui.home.videos.view.VideosFragment
+import com.sarvagya.android.ui.music.MusicActivity
 import com.sarvagya.android.ui.music.MusicFragment
 import com.sarvagya.android.util.StringProvider
 import javax.inject.Inject
@@ -43,7 +41,7 @@ import javax.inject.Inject
 class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
     NavigationView.OnNavigationItemSelectedListener {
 
-    public lateinit var binding: ActivityHomeBinding
+    lateinit var binding: ActivityHomeBinding
     private var counter = 0
     private val drawerListener = DrawerListener()
 
@@ -102,7 +100,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private fun loadDrawerFragment(selectedDrawerItem: DrawerMenus) {
         when (selectedDrawerItem) {
             FESTIVAL -> FestivalFragment(this).attachWithReplace(this)
-            MUSIC -> MusicFragment(this).attachWithReplace(this)
+            MUSIC -> navigateToActivity(MusicActivity::class.java, shouldFinish = false)
             else -> {
             }
         }
@@ -155,7 +153,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_toolbar, menu)
+        menuInflater.inflate(R.menu.music_toolbar, menu)
         binding.toolbar.setOnMenuItemClickListener { item ->
             onOptionsItemSelected(item!!)
         }

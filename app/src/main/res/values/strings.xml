@@ -11,4 +11,5 @@
     <string name="exit_msg">Please press again to exit.</string>
     <string name="coming_soon">Coming soon</string>
     <string name="album_thumbnail">Album Thumbnail</string>
+    <string name="msg_last_song">This is last song</string>
 </resources>

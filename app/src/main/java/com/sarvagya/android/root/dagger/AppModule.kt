@@ -1,6 +1,8 @@
 package com.sarvagya.android.root.dagger
 
 import android.content.Context
+import com.sarvagya.android.musicplayer.ExoPlayerImpl
+import com.sarvagya.android.musicplayer.MusicPlayer
 import com.sarvagya.android.root.SarvagyaApplication
 import com.sarvagya.android.ui.home.feeds.data.http.FeedsService
 import com.sarvagya.android.ui.home.feeds.data.http.HttpFeedsService
@@ -39,4 +41,8 @@ abstract class BindModule{
     @Singleton
     abstract fun createVideoService(videosService: HttpVideoService) : VideoService
 
+
+    @Binds
+    @Singleton
+    abstract fun createMusicPlayer(ExoPlayerImpl: ExoPlayerImpl) : MusicPlayer
 }

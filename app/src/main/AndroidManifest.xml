@@ -17,6 +17,8 @@
         android:theme="@style/Theme.Sarvagya"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity android:name=".ui.music.MusicActivity"
+            android:exported="false"/>
         <activity
             android:name=".ui.home.videos.view.VideoPlayerActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|uiMode"

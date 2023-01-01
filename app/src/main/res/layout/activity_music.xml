@@ -5,6 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.music.MusicFragment">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:title="Music"
+            app:menu="@menu/menu_music"
+            app:titleTextColor="@color/white"
+            app:navigationIcon="@drawable/ic_back_white"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <include
         android:id="@+id/albumLyt"
@@ -13,7 +29,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/appBar" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/divider"
