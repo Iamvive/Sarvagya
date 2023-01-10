@@ -5,6 +5,7 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import javax.inject.Inject
 
+//Todo 1. SeekBar Implementation
 interface MusicPlayer {
     suspend fun init(uri: String)
     fun isPlaying(): Boolean

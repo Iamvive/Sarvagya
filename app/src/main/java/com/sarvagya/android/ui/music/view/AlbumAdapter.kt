@@ -5,13 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sarvagya.android.databinding.ItemAlbumBinding
 import com.sarvagya.android.extension.loadImage
-import com.sarvagya.android.ui.music.data.staticmodel.MusicPlaylist
+import com.sarvagya.android.ui.music.data.playlist.Playlist
 import com.sarvagya.android.ui.music.view.AlbumAdapter.*
 
-class AlbumAdapter(
-    private val albums: List<MusicPlaylist> = emptyList()
-) : RecyclerView.Adapter<AlbumVH>() {
+class AlbumAdapter() : RecyclerView.Adapter<AlbumVH>() {
 
+    private val albums = mutableListOf<Playlist>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumVH {
         val viewBinding = ItemAlbumBinding.inflate(LayoutInflater.from(parent.context))
         return AlbumVH(viewBinding)
@@ -26,12 +25,18 @@ class AlbumAdapter(
         return albums.size
     }
 
+    fun setData(playlist: List<Playlist>) {
+        albums.addAll(playlist)
+        notifyDataSetChanged()
+    }
+
     inner class AlbumVH(private val viewBinding: ItemAlbumBinding) : RecyclerView.ViewHolder(viewBinding.root) {
-        fun bindData(item: MusicPlaylist) {
+        fun bindData(item: Playlist) {
             viewBinding.apply {
-                albumIV.loadImage(item.playlistImage)
-                albumTV.text = item.playlistName
+                albumIV.loadImage(item.image)
+                albumTV.text = item.name
             }
+            viewBinding.cardView
         }
     }
 

@@ -1,44 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.music.MusicFragment">
+    tools:context=".ui.music.MusicActivity">
+
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBar"
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dimen_52_dp"
+        android:layout_gravity="top"
+        android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        >
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:title="Music"
+            app:title=""
             app:menu="@menu/menu_music"
-            app:titleTextColor="@color/white"
-            app:navigationIcon="@drawable/ic_back_white"/>
+            app:navigationIcon="@drawable/ic_navigation">
+
+            <TextView
+                android:id="@+id/tbTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="title"
+                android:textStyle="bold"
+                android:textSize="@dimen/dimens_14_sp"
+                android:textColor="@color/black"
+                android:padding="@dimen/dimens_4_dp"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                android:drawablePadding="@dimen/dimens_8_dp"
+                app:drawableStartCompat="@drawable/ic_toolbar_header_left"
+                app:drawableEndCompat="@drawable/ic_toolbar_header_right" />
+
+        </androidx.appcompat.widget.Toolbar>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
         android:id="@+id/albumLyt"
         layout="@layout/album_lyt"
+        android:layout_marginTop="@dimen/dimen_50_dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBar" />
-
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimens_2_dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/albumLyt" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/songsList"
@@ -49,7 +64,6 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
         app:layout_constraintBottom_toTopOf="@+id/musicPlayer"
         tools:listitem="@layout/item_songs" />
 

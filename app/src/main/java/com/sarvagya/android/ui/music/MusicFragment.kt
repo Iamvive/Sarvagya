@@ -26,7 +26,7 @@ import javax.inject.Inject
 class MusicFragment(private val activity: HomeActivity) : Fragment() {
 
     private val musicList = MusicDataSource.getMusicPlaylist()
-    private val albumAdapter by lazy { AlbumAdapter(musicList) }
+    private val albumAdapter by lazy { AlbumAdapter() }
     private val songsAdapter by lazy { SongsAdapter(musicList) }
     private var currentPosition = 0
 
@@ -37,6 +37,7 @@ class MusicFragment(private val activity: HomeActivity) : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (requireContext().applicationContext as SarvagyaApplication).appComponent.inject(this)
+
         super.onCreate(savedInstanceState)
     }
 

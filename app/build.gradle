@@ -93,6 +93,11 @@ dependencies {
     //drawer layout
     implementation "androidx.drawerlayout:drawerlayout:1.0.0"
 
+    debugImplementation "com.github.chuckerteam.chucker:library:3.5.2"
+    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.5.2"
+
+    implementation 'com.squareup:seismic:1.0.3'
+    
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'

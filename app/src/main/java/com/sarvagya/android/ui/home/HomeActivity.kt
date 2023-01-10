@@ -14,27 +14,29 @@ import com.sarvagya.android.extension.attachWithReplace
 import com.sarvagya.android.extension.navigateToActivity
 import com.sarvagya.android.extension.showSnackbar
 import com.sarvagya.android.root.SarvagyaApplication
+import com.sarvagya.android.root.manager.shake.ShakeManager
 import com.sarvagya.android.ui.festival.FestivalFragment
-import com.sarvagya.android.ui.home.appointment.AppointmentFragment
-import com.sarvagya.android.ui.home.donation.DonationFragment
-import com.sarvagya.android.ui.home.feeds.FeedDetailActivity
-import com.sarvagya.android.ui.home.feeds.FeedDetailActivity.Companion.FEED_DATA
-import com.sarvagya.android.ui.home.feeds.FeedDetailActivity.Companion.FEED_ID
-import com.sarvagya.android.ui.home.feeds.FeedsListener
-import com.sarvagya.android.ui.home.feeds.view.FeedsFragment
-import com.sarvagya.android.ui.home.models.DrawerMenus
-import com.sarvagya.android.ui.home.models.DrawerMenus.*
-import com.sarvagya.android.ui.home.models.HeaderVM
-import com.sarvagya.android.ui.home.models.HomeVM
-import com.sarvagya.android.ui.home.models.Menus
-import com.sarvagya.android.ui.home.models.Menus.*
-import com.sarvagya.android.ui.home.videos.VideoAdapterOnClickListener
-import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity
-import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity.Companion.VIDEO_DATA
-import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity.Companion.VIDEO_ID
-import com.sarvagya.android.ui.home.videos.view.VideosFragment
+import com.sarvagya.android.ui.appointment.AppointmentFragment
+import com.sarvagya.android.ui.donation.DonationFragment
+import com.sarvagya.android.ui.feeds.FeedDetailActivity
+import com.sarvagya.android.ui.feeds.FeedDetailActivity.Companion.FEED_DATA
+import com.sarvagya.android.ui.feeds.FeedDetailActivity.Companion.FEED_ID
+import com.sarvagya.android.ui.feeds.FeedsListener
+import com.sarvagya.android.ui.feeds.view.FeedsFragment
+import com.sarvagya.android.ui.home.DrawerMenus
+import com.sarvagya.android.ui.home.DrawerMenus.*
+import com.sarvagya.android.ui.home.HeaderVM
+import com.sarvagya.android.ui.home.HomeVM
+import com.sarvagya.android.ui.home.Menus
+import com.sarvagya.android.ui.home.Menus.*
+import com.sarvagya.android.ui.videos.VideoAdapterOnClickListener
+import com.sarvagya.android.ui.videos.view.VideoPlayerActivity
+import com.sarvagya.android.ui.videos.view.VideoPlayerActivity.Companion.VIDEO_DATA
+import com.sarvagya.android.ui.videos.view.VideoPlayerActivity.Companion.VIDEO_ID
+import com.sarvagya.android.ui.videos.view.VideosFragment
 import com.sarvagya.android.ui.music.MusicActivity
 import com.sarvagya.android.ui.music.MusicFragment
+import com.sarvagya.android.ui.videos.VideoListener
 import com.sarvagya.android.util.StringProvider
 import javax.inject.Inject
 
@@ -48,13 +50,19 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     @Inject
     lateinit var stringProvider: StringProvider
 
+    @Inject
+    lateinit var shakeManager : ShakeManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as SarvagyaApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         setSupportActionBar(binding.toolbar)
+
+        shakeManager.invoke()
 
         //bottom navigation
         binding.homeNavigation.setOnItemSelectedListener(this)
@@ -68,6 +76,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         //load feed fragment
         loadFragment(FEEDS)
+
     }
 
     override fun onResume() {
@@ -117,7 +126,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     inner class VideoAdapterOnClickListenerImpl : VideoAdapterOnClickListener {
         override fun onClick(id: Int) {
-            navigateToActivity(VideoPlayerActivity::class.java,
+            navigateToActivity(
+                VideoPlayerActivity::class.java,
                 shouldFinish = false,
                 bundleKey = VIDEO_DATA,
                 bundle = Bundle().apply
@@ -184,6 +194,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
     }
 
+
+
     inner class DrawerListener : NavigationView.OnNavigationItemSelectedListener{
         override fun onNavigationItemSelected(item: MenuItem): Boolean {
             when (item.itemId) {
@@ -199,6 +211,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     //load festival fragment
                     loadDrawerFragment(FESTIVAL)
                 }
+
                 id.video -> {
                     //close drawer
                     binding.drawerLayout.closeDrawers()
@@ -209,6 +222,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     //load video fragment
                     loadFragment(VIDEOS)
                 }
+
                 id.feed -> {
                     //close drawer
                     binding.drawerLayout.closeDrawers()
@@ -219,6 +233,7 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     //load feed fragment
                     loadFragment(FEEDS)
                 }
+
                 id.donation -> {
                     //close drawer
                     binding.drawerLayout.closeDrawers()
