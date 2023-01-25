@@ -3,7 +3,10 @@ package com.sarvagya.android.ui.music
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
@@ -11,17 +14,25 @@ import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import coil.api.load
 import com.sarvagya.android.R
 import com.sarvagya.android.databinding.ActivityMusicBinding
+import com.sarvagya.android.extension.attachWithReplace
 import com.sarvagya.android.extension.loadImage
 import com.sarvagya.android.extension.showToast
 import com.sarvagya.android.musicplayer.MusicPlayer
 import com.sarvagya.android.root.SarvagyaApplication
 import com.sarvagya.android.ui.music.data.MusicDataSource
+import com.sarvagya.android.ui.music.data.playlist.Playlist
 import com.sarvagya.android.ui.music.view.AlbumAdapter
 import com.sarvagya.android.ui.music.view.SongsAdapter
 import com.sarvagya.android.util.StringProvider
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
+//Todo 1. App bar customisation(Color, Text with Icon and Menu).
+// 2. Listener for loading Videos Fragment
+// 3. On tap of songs play the song
+// 4. Selected album highlight
+// 5. Highlight the current playing song in the list
 class MusicActivity : AppCompatActivity() {
 
     @Inject
@@ -29,10 +40,14 @@ class MusicActivity : AppCompatActivity() {
     @Inject
     lateinit var stringProvider: StringProvider
     private val musicList = MusicDataSource.getMusicPlaylist()
-    private val albumAdapter by lazy { AlbumAdapter(musicList) }
+    private val albumAdapter by lazy { AlbumAdapter() }
     private val songsAdapter by lazy { SongsAdapter(musicList) }
     private var currentPosition = 0
 
+    private lateinit var viewModel: MusicViewModel
+
+    @Inject
+    lateinit var viewModelFactory: MusicViewModelFactory
     private val binding by lazy {
         ActivityMusicBinding.inflate(layoutInflater)
     }
@@ -42,26 +57,47 @@ class MusicActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        //viewModel
+        viewModel = ViewModelProviders.of(
+            this,
+            viewModelFactory
+        )[MusicViewModel::class.java]
+
+        observeData()
         setAlbumList()
         setSongList()
         registerMusicPlayerListener()
         setMusicUiData(currentPosition)
-        setSupportActionBar(binding.toolbar)
 
-        binding.toolbar.setNavigationOnClickListener {
-            onBackPressed()
+    }
+
+    private fun observeData() {
+        viewModel.livePlaylist.observe(this){
+            if(it.isNullOrEmpty()) return@observe
+            renderPlayListData(it)
         }
     }
 
+    private fun renderPlayListData(playlist: List<Playlist>) {
+        albumAdapter.setData(playlist)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_music, menu)
+        menuInflater.inflate(R.menu.music_toolbar, menu)
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            onOptionsItemSelected(item!!)
+        }
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == R.id.item_video) {
-            true
-        } else super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.item_video -> {
+                Toast.makeText(this@MusicActivity,R.string.message,Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setAlbumList() {
@@ -138,6 +174,7 @@ class MusicActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        viewModel.fetchPlaylist()   //Album list api call
         initMusicPlayer()
     }
 
@@ -147,7 +184,6 @@ class MusicActivity : AppCompatActivity() {
             updatePlayState()
         }
     }
-
 
     private fun initMusicPlayer() {
         lifecycleScope.launch {
@@ -164,4 +200,5 @@ class MusicActivity : AppCompatActivity() {
         super.onStop()
         player.release()
     }
+
 }

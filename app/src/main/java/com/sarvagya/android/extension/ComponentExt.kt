@@ -1,13 +1,11 @@
 package com.sarvagya.android.extension
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.sarvagya.android.R
-import com.sarvagya.android.ui.home.HomeActivity
 
 fun AppCompatActivity.navigateToActivity(
     destinationActivity: Class<*>,
@@ -34,6 +32,8 @@ fun Fragment.attachWithAdd(containerId: Int, backStackTag: String?, args: Bundle
     this.arguments = args
     val transaction = this.requireActivity().supportFragmentManager.beginTransaction()
     transaction.add(containerId, this)
-    backStackTag?.let { transaction.addToBackStack(backStackTag) }
+    backStackTag?.let {
+        transaction.addToBackStack(backStackTag)
+    }
     transaction.commit()
 }
