@@ -46,8 +46,8 @@ class FeedsFragment(private val activity: HomeActivity,private val listener: Fee
         feedsViewModel.handlePresenter(this, listener)
 
         //toolbar icon change
-        val musicButton = activity.binding.toolbar.menu.findItem(R.id.leftNavigate)
-        musicButton.setIcon(R.drawable.ic_music)
+//        val musicButton = activity.binding.toolbar.menu.findItem(R.id.leftNavigate)
+//        musicButton.setIcon(R.drawable.ic_music)
         return feedsBinding.root
     }
 
