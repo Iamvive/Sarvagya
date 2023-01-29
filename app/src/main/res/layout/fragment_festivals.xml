@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/llMonthYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimens_75_dp"
+        android:layout_marginBottom="@dimen/dimens_75_dp"
+        android:layout_marginTop="@dimen/dimens_10_dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_small_item_grey_border"
+            android:weightSum="3"
+            android:layout_marginEnd="@dimen/dimens_5_dp"
+            >
+
+            <TextView
+                android:id="@+id/tvMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimens_2_dp"
+                android:layout_weight="1.9"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/dimens_18_dp"
+                tools:text="Month"
+                android:textAlignment="center"
+                android:padding="@dimen/dimen_5_dp"
+                />
+
+            <View
+                android:id="@+id/dividerView"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".01"
+                android:background="@color/divierGrey"
+
+                />
+
+            <ImageButton
+                android:id="@+id/arrowDownMnIV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:padding="@dimen/dimen_5_dp"
+                android:src="@drawable/ic_arrow_down" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_small_item_grey_border"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_marginStart="@dimen/dimens_8_dp"
+            >
+
+            <TextView
+                android:id="@+id/tvYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimens_2_dp"
+                android:layout_weight="1.9"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/dimens_18_dp"
+                tools:text="2022"
+                android:textAlignment="center"
+                android:padding="@dimen/dimen_5_dp"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".01"
+                android:background="@color/divierGrey" />
+
+            <ImageButton
+                android:id="@+id/arrowDownYrIV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:padding="@dimen/dimen_5_dp"
+                android:src="@drawable/ic_arrow_down" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/festiveRV"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llMonthYear"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/item_festive" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

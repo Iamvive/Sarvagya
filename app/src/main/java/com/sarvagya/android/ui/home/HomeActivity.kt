@@ -3,17 +3,20 @@ package com.sarvagya.android.ui.home
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.navigation.NavigationView
 import com.sarvagya.android.R
 import com.sarvagya.android.R.id
-import com.sarvagya.android.util.StringProvider
 import com.sarvagya.android.databinding.ActivityHomeBinding
 import com.sarvagya.android.extension.attachWithReplace
 import com.sarvagya.android.extension.navigateToActivity
 import com.sarvagya.android.extension.showSnackbar
 import com.sarvagya.android.root.SarvagyaApplication
+import com.sarvagya.android.ui.festival.FestivalFragment
 import com.sarvagya.android.ui.home.appointment.AppointmentFragment
 import com.sarvagya.android.ui.home.donation.DonationFragment
 import com.sarvagya.android.ui.home.feeds.FeedDetailActivity
@@ -21,21 +24,28 @@ import com.sarvagya.android.ui.home.feeds.FeedDetailActivity.Companion.FEED_DATA
 import com.sarvagya.android.ui.home.feeds.FeedDetailActivity.Companion.FEED_ID
 import com.sarvagya.android.ui.home.feeds.FeedsListener
 import com.sarvagya.android.ui.home.feeds.view.FeedsFragment
+import com.sarvagya.android.ui.home.models.DrawerMenus
+import com.sarvagya.android.ui.home.models.DrawerMenus.*
 import com.sarvagya.android.ui.home.models.HeaderVM
 import com.sarvagya.android.ui.home.models.HomeVM
 import com.sarvagya.android.ui.home.models.Menus
 import com.sarvagya.android.ui.home.models.Menus.*
 import com.sarvagya.android.ui.home.videos.VideoAdapterOnClickListener
-import com.sarvagya.android.ui.home.videos.VideoPlayerActivity
-import com.sarvagya.android.ui.home.videos.VideoPlayerFragment
-import com.sarvagya.android.ui.home.videos.VideosFragment
+import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity
+import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity.Companion.VIDEO_DATA
+import com.sarvagya.android.ui.home.videos.view.VideoPlayerActivity.Companion.VIDEO_ID
+import com.sarvagya.android.ui.home.videos.view.VideoPlayerFragment
+import com.sarvagya.android.ui.home.videos.view.VideosFragment
+import com.sarvagya.android.ui.music.MusicFragment
+import com.sarvagya.android.util.StringProvider
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
-    VideoAdapterOnClickListener {
+    NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var binding: ActivityHomeBinding
+    public lateinit var binding: ActivityHomeBinding
     private var counter = 0
+    private val drawerListener = DrawerListener()
 
     @Inject
     lateinit var stringProvider: StringProvider
@@ -50,6 +60,8 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         //bottom navigation
         binding.homeNavigation.setOnItemSelectedListener(this)
+
+        binding.navView.setNavigationItemSelectedListener(drawerListener)
 
         //start navigation drawer
         binding.toolbar.setNavigationOnClickListener {
@@ -81,10 +93,18 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private fun loadFragment(selectedItem: Menus) {
         when (selectedItem) {
             FEEDS -> FeedsFragment(FeedsListenerImpl()).attachWithReplace(this)
-            VIDEOS -> VideosFragment(this).attachWithReplace(this)
+            VIDEOS -> VideosFragment(this,VideoAdapterOnClickListenerImpl()).attachWithReplace(this)
             DONATION -> DonationFragment().attachWithReplace(this)
             APPOINTMENTS -> AppointmentFragment().attachWithReplace(this)
-            VIDEOPLAYER -> VideoPlayerFragment(this).attachWithReplace(this)
+        }
+    }
+
+    private fun loadDrawerFragment(selectedDrawerItem: DrawerMenus) {
+        when (selectedDrawerItem) {
+            FESTIVAL -> FestivalFragment(this).attachWithReplace(this)
+            MUSIC -> MusicFragment(this).attachWithReplace(this)
+            else -> {
+            }
         }
     }
 
@@ -97,7 +117,18 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    inner class VideoAdapterOnClickListenerImpl : VideoAdapterOnClickListener {
+        override fun onClick(id: Int) {
+            navigateToActivity(VideoPlayerActivity::class.java,
+                shouldFinish = false,
+                bundleKey = VIDEO_DATA,
+                bundle = Bundle().apply
+                { putInt(VIDEO_ID, id) }
+            )
+        }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {    //bottom navigation listener
         when (item.itemId) {
             id.feeds -> {
                 binding.tbTitle.text = stringProvider(R.string.news)
@@ -108,12 +139,16 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 loadFragment(VIDEOS)
             }
             id.donation -> {
-                binding.tbTitle.text = stringProvider(R.string.donation)
-                loadFragment(DONATION)
+                this.showSnackbar(
+                    resId = R.string.coming_soon,
+                    view = binding.root,
+                )
             }
             id.appointment -> {
-                binding.tbTitle.text = stringProvider(R.string.appointment)
-                loadFragment(APPOINTMENTS)
+                this.showSnackbar(
+                    resId = R.string.coming_soon,
+                    view = binding.root,
+                )
             }
         }
         return true
@@ -127,19 +162,16 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         return true
     }
 
-
+    // overriden method for toolbar menus
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             id.leftNavigate -> {
-//                 startActivity(Intent(this,))//TODO: Music screen render
+                binding.tbTitle.text = stringProvider(R.string.music)
+                   MusicFragment(this).attachWithReplace(this)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onClick() {
-        navigateToActivity(VideoPlayerActivity::class.java, shouldFinish = false)
     }
 
     override fun onBackPressed() {
@@ -154,4 +186,66 @@ class HomeActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
     }
 
+    inner class DrawerListener : NavigationView.OnNavigationItemSelectedListener{
+        override fun onNavigationItemSelected(item: MenuItem): Boolean {
+            when (item.itemId) {
+                id.festival -> {
+
+                    //close drawer
+                    binding.drawerLayout.closeDrawers()
+
+                    //Remove Music Icon
+                    val musicButton = binding.toolbar.menu.findItem(R.id.leftNavigate)
+                    musicButton.isVisible = false
+
+                    //load festival fragment
+                    loadDrawerFragment(FESTIVAL)
+                }
+                id.video -> {
+                    //close drawer
+                    binding.drawerLayout.closeDrawers()
+
+                    //change toolbar title
+                    binding.tbTitle.text = stringProvider(R.string.videos)
+
+                    //load video fragment
+                    loadFragment(VIDEOS)
+                }
+                id.feed -> {
+                    //close drawer
+                    binding.drawerLayout.closeDrawers()
+
+                    //change toolbar title
+                    binding.tbTitle.text = stringProvider(R.string.news)
+
+                    //load feed fragment
+                    loadFragment(FEEDS)
+                }
+                id.donation -> {
+                    //close drawer
+                    binding.drawerLayout.closeDrawers()
+
+                    //change toolbar title
+                    binding.tbTitle.text = stringProvider(R.string.donation)
+
+                    //load feed fragment
+                    loadDrawerFragment(D_DONATION)
+                }
+
+                id.aarati -> {
+                    //close drawer
+                    binding.drawerLayout.closeDrawers()
+
+                    //change toolbar title
+                    binding.tbTitle.text = stringProvider(R.string.music)
+
+                    //load music fragment
+                    loadDrawerFragment(MUSIC)
+
+                }
+
+            }
+            return true
+        }
+    }
 }

@@ -1,5 +1,11 @@
 package com.sarvagya.android.ui.home.videos
 
 interface VideoAdapterOnClickListener {
-    fun onClick()
+    fun onClick(id: Int)
 }
+
+
+
+
+
+

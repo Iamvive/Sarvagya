@@ -18,8 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.home.videos.VideoPlayerActivity"
+            android:name=".ui.home.videos.view.VideoPlayerActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:screenOrientation="landscape"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -1,4 +1,4 @@
-package com.sarvagya.android.ui.home.videos
+package com.sarvagya.android.ui.home.videos.view
 
 import android.annotation.SuppressLint
 import android.net.Uri

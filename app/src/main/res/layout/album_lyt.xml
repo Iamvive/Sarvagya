@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dimen_5_dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/albumList"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimens_140_dp"
+        android:layout_height="@dimen/dimens_90_dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

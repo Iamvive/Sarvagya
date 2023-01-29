@@ -6,6 +6,10 @@
     <string name="videos">वीडियो</string>
     <string name="donation">दान करें</string>
     <string name="appointment">नियुक्ति</string>
+    <string name="music">Music Collection</string>
+    <string name="festival">Festival</string>
     <string name="media_url_dash">https://sarvagya.blob.core.windows.net/videos/sample-video.mp4</string>
     <string name="exit_msg">Please press again to exit.</string>
+    <string name="coming_soon">Coming soon</string>
+    <string name="album_thumbnail">Album Thumbnail</string>
 </resources>

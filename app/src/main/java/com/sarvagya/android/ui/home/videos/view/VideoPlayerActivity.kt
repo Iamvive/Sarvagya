@@ -1,4 +1,4 @@
-package com.sarvagya.android.ui.home.videos
+package com.sarvagya.android.ui.home.videos.view
 
 import android.annotation.SuppressLint
 import android.net.Uri
@@ -8,15 +8,18 @@ import android.util.Log
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.ViewModelProviders
 import androidx.media3.common.MediaItem
-import androidx.media3.common.MimeTypes
 import androidx.media3.common.Player
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import androidx.media3.ui.AspectRatioFrameLayout
-import com.sarvagya.android.R
 import com.sarvagya.android.databinding.ActivityVideoPlayerBinding
+import com.sarvagya.android.root.SarvagyaApplication
+import com.sarvagya.android.ui.home.videos.VideosViewModel
+import com.sarvagya.android.ui.home.videos.VideosViewModelFactory
+import javax.inject.Inject
 
 class VideoPlayerActivity : AppCompatActivity() {
 
@@ -28,25 +31,44 @@ class VideoPlayerActivity : AppCompatActivity() {
     private var playWhenReady = true
     private var currentItem = 0
     private var playbackPosition = 0L
+    @Inject lateinit var videosViewModelFactory : VideosViewModelFactory
+    private lateinit var viewModel: VideosViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as SarvagyaApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
+
+        viewModel = ViewModelProviders.of(this, videosViewModelFactory)[VideosViewModel::class.java]
+        val videoId = intent?.getBundleExtra(VIDEO_DATA)?.let { it.getInt(VIDEO_ID) }
+
+        if (videoId!=null) viewModel.getVideo(videoId)
+        observeData()
+    }
+
+    private fun observeData() {
+        viewModel.liveVideo.observe(this) {
+            hideSystemUi()
+            if (Util.SDK_INT <= 23 || player == null) {
+                initializePlayer(it.videoUrl)
+            }
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        if (Util.SDK_INT > 23) {
-            initializePlayer()
-        }
+//        if (Util.SDK_INT > 23) {
+//            initializePlayer()
+//        }
     }
 
     override fun onResume() {
         super.onResume()
-        hideSystemUi()
-        if (Util.SDK_INT <= 23 || player == null) {
-            initializePlayer()
-        }
+
+//        hideSystemUi()
+//        if (Util.SDK_INT <= 23 || player == null) {
+//            initializePlayer()
+//        }
     }
 
     override fun onPause() {
@@ -79,11 +101,12 @@ class VideoPlayerActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsControllerCompat(window, viewBinding.videoView).let { controller ->
             controller.hide(WindowInsetsCompat.Type.systemBars())
-            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            controller.systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
 
-    private fun initializePlayer() {
+    private fun initializePlayer(uri: String = URL) {
         val trackSelector = DefaultTrackSelector(applicationContext).apply {
             setParameters(buildUponParameters().setMaxVideoSizeSd())
         }
@@ -96,17 +119,20 @@ class VideoPlayerActivity : AppCompatActivity() {
                     resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
                 }
 
-                val mediaItem = MediaItem.fromUri(Uri.parse("https://sarvagya.blob.core.windows.net/videos/sample-video.mp4"))
+                val mediaItem = MediaItem.fromUri(Uri.parse(uri))
                 exoPlayer.setMediaItem(mediaItem)
 
                 exoPlayer.playWhenReady = playWhenReady
-                Log.i("VideoPlayerActivity", "initializePlayer: playbackPosition: $playbackPosition")
+                Log.i(
+                    "VideoPlayerActivity",
+                    "initializePlayer: playbackPosition: $playbackPosition"
+                )
                 exoPlayer.seekTo(currentItem, playbackPosition)
                 exoPlayer.addListener(playbackStateListener)
                 exoPlayer.prepare()
             }
     }
-    
+
     private fun playbackStateListener() = object : Player.Listener {
         override fun onPlaybackStateChanged(playbackState: Int) {
             val stateString: String = when (playbackState) {
@@ -120,4 +146,9 @@ class VideoPlayerActivity : AppCompatActivity() {
         }
     }
 
+    companion object {
+        const val VIDEO_ID = "video_id"
+        const val VIDEO_DATA = "video_data"
+        const val URL = "https://sarvagya.blob.core.windows.net/videos/sample-video.mp4"
+    }
 }

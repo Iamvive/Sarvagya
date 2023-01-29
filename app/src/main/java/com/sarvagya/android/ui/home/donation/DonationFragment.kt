@@ -8,9 +8,7 @@ import android.view.ViewGroup.LayoutParams
 import android.view.ViewGroup.LayoutParams.*
 import androidx.fragment.app.Fragment
 import com.google.android.material.chip.Chip
-import com.sarvagya.android.R
 import com.sarvagya.android.databinding.FragmentDonationBinding
-import com.sarvagya.android.databinding.FragmentFeedsBinding
 
 class DonationFragment : Fragment() {
     

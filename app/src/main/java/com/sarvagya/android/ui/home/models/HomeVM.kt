@@ -2,7 +2,7 @@ package com.sarvagya.android.ui.home.models
 
 data class HomeVM(
     val headerVM: HeaderVM,
-    val selectedMenuItem: Menus
+    val selectedMenuItem: Menus,
 )
 data class HeaderVM(
     val title : String,
@@ -12,5 +12,15 @@ enum class Menus{
     VIDEOS,
     DONATION,
     APPOINTMENTS,
-    VIDEOPLAYER,
+
+}
+
+enum class DrawerMenus{
+    D_FEEDS,
+    D_VIDEOS,
+    D_DONATION,
+    D_APPOINTMENTS,
+    FESTIVAL,
+    MUSIC,
+
 }

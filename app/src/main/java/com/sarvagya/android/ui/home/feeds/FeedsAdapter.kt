@@ -46,16 +46,16 @@ class FeedsAdapter(private var feeds: List<FeedVM>) : Adapter<FeedsViewHolder>()
                 //Register Listener here
                 itemChannel.trySend(feeds[adapterPosition].id)
             }
-
         }
 
         fun bindData(feed: FeedVM) {
             binding.apply {
                 newsTV.text = feed.title
-                newsDescTV.text = feed.desc
+                newsDescTV.text = feed.descShort
                 newsTime.text = feed.duration
                 newsIV.loadImage(feed.thumbnail)
             }
         }
+
     }
 }
